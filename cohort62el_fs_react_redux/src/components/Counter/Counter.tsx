@@ -1,20 +1,25 @@
-import { useAppDispatch, useAppSelector } from "store/hooks";
-import { counterSliceAction, counterSliceSelectors } from "store/redux/counterSlice/counterSlice";
-import Button from "components/Button/Button";
+import { useAppDispatch, useAppSelector } from "store/hooks"
+import {
+  counterSliceAction,
+  counterSliceSelectors,
+} from "store/redux/counterSlice/counterSlice"
+import Button from "components/Button/Button"
 
-import "./styles.css";
+import "./styles.css"
 
 function Counter() {
   // hook не принимает аргументов просто возвращает функцию которая передает действие в store
-  const dispath = useAppDispatch()
+  const dispatch = useAppDispatch()
   // забираем значения из store и передаем данные в нужные места JSX, подписываемся на изменения store
   const count = useAppSelector(counterSliceSelectors.count)
 
   const onMinus = () => {
-    dispath(counterSliceAction.minus())
+    // counterSliceActions.plus() - это action creator, при вызове которого мы получаем action
+    dispatch(counterSliceAction.minus())
   }
   const onPlus = () => {
-   dispath(counterSliceAction.plus())
+    const action = counterSliceAction.plus()
+    dispatch(action)
   }
 
   return (
@@ -27,7 +32,7 @@ function Counter() {
         <Button name="+" onClick={onPlus} />
       </div>
     </div>
-  );
+  )
 }
 
-export default Counter;
+export default Counter

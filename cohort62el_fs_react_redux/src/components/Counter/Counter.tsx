@@ -4,8 +4,7 @@ import {
   counterSliceSelectors,
 } from "store/redux/counterSlice/counterSlice"
 import Button from "components/Button/Button"
-
-import "./styles.css"
+import { ButtonControl, Count, CounterWrapper } from "./styles"
 
 function Counter() {
   // hook не принимает аргументов просто возвращает функцию которая передает действие в store
@@ -23,16 +22,16 @@ function Counter() {
   }
 
   return (
-    <div className="counter_wrapper">
-      <div className="button_control">
+    <CounterWrapper>
+      <ButtonControl>
         <Button name="-" onClick={onMinus} />
-      </div>
-      <p className="count">{count}</p>
-      <div className="button_control">
+      </ButtonControl>
+      <Count>{count}</Count>
+      <ButtonControl>
         <Button name="+" onClick={onPlus} />
-      </div>
-    </div>
+      </ButtonControl>
+    </CounterWrapper>
   )
 }
 
-export default Counter
+export default Counter;

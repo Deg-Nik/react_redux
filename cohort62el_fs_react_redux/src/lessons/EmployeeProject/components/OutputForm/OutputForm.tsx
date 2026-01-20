@@ -1,4 +1,5 @@
 
+import Button from "components/Button/Button";
 import {
   EmployeesWrapper,
   OutputWrapper,
@@ -9,7 +10,9 @@ import type { OutputProps } from "./types";
 
 
 function OutputForm({person}: OutputProps) {
-    
+
+  const onDelete = () =>{};
+  const removeAllEmployees = () =>{};
   return (
     <EmployeesWrapper>
       <OutputWrapper>
@@ -27,7 +30,9 @@ function OutputForm({person}: OutputProps) {
       <OutputWrapper>
         <LabelWrapper>Job Position</LabelWrapper>
         <UserText>{person.job_position}</UserText>
+        <Button name="Delete" isRed onClick={onDelete}/>
       </OutputWrapper>
+      <Button name="Remove All Employees!" isRed onClick={removeAllEmployees}/>
     </EmployeesWrapper>
   );
 }

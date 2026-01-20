@@ -6,7 +6,7 @@ const feedbackInitialState = {
 }
 
 export const feedbackSlice = createAppSlice({
-  name: "COUNTER",
+  name: "FEEDBACK",
   initialState: feedbackInitialState,
   reducers: {
     like: state => {
@@ -15,10 +15,11 @@ export const feedbackSlice = createAppSlice({
     dislike: state => {
       state.countDislike = state.countDislike + 1
     },
-    ressetResult: state => {
-      state.countLike = 0,
-      state.countDislike = 0
-    }
+    // ressetResult: state => {
+    //   state.countLike = 0,
+    //   state.countDislike = 0
+    // }
+    ressetResult: () => feedbackInitialState,
   },
   selectors: {
     countLike: state => {

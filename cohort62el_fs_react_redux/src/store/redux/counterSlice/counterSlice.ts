@@ -1,7 +1,9 @@
 import { createAppSlice } from "store/createAppSlice";
+import { CounterSliceState } from "./types";
+import { PayloadAction } from "@reduxjs/toolkit";
 
 
-const counterInitialState = {
+const counterInitialState: CounterSliceState = {
   count: 0
 }
 
@@ -12,16 +14,23 @@ export const counterSlice = createAppSlice({
   initialState: counterInitialState,
   // reducers обьект содержащий функции и изменяет стейт
   reducers: {
-    plus: state => {
+    plus: (state: CounterSliceState) => {
       state.count = state.count + 1
     },
-    minus: state => {
+    minus: (state: CounterSliceState) => {
       state.count = state.count - 1
+    },
+    multiply: (state: CounterSliceState, action: PayloadAction<number>) => {
+      console.log(action);
+      state.count = Number((state.count * action.payload).toFixed(3))
+    },
+    divide: (state: CounterSliceState, action: PayloadAction<number>) => {
+      state.count = Number((state.count / action.payload).toFixed(2))
     }
   },
   // selectors прописываем какие данные передать компонентам
   selectors: {
-    count: state => {
+    count: (state: CounterSliceState) => {
       return state.count
     },
   },

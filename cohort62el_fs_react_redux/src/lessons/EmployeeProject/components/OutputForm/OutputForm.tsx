@@ -6,10 +6,19 @@ import {
   LabelWrapper,
   UserText,
 } from "./styles";
-import type { OutputProps } from "./types";
+import { useAppDispatch, useAppSelector } from "store/hooks";
+import { employeeSliceAction, employeeSliceSelectors } from "store/redux/employeeSlice/employeeSlice";
+import { EmployeeData } from "lessons/EmployeeProject/types";
 
 
-function OutputForm({person}: OutputProps) {
+
+
+function OutputForm({person}: any) {
+
+  const dispatch = useAppDispatch()
+  
+
+  
 
   const onDelete = () =>{};
   const removeAllEmployees = () =>{};

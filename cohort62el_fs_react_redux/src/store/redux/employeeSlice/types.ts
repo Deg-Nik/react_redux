@@ -1,6 +1,5 @@
-export interface EmployeeInterfece{
-    name: string,
-    surname: string;
-    age: number,
-    jobPosition:string
+import { type EmployeeData } from "lessons/EmployeeProject/types";
+
+export interface EmployeeInitialState {
+  person: EmployeeData [],
 }

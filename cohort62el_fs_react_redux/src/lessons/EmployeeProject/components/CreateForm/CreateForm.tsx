@@ -3,7 +3,7 @@ import * as Yup from "yup";
 
 import Button from "components/Button/Button";
 import Input from "components/Input/Input";
-import { EmployeeContext } from "pages/EmployeeProject/Layout";
+import { EmployeeContext } from "../../Layout"
 
 import { CREATE_FORM_VALUES } from "./types";
 import { CreateFormContainer, InputsContainer} from "./styles";

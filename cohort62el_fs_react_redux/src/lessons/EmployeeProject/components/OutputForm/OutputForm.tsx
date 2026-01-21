@@ -5,6 +5,9 @@ import {
   OutputWrapper,
   LabelWrapper,
   UserText,
+  ButtonWrapper,
+  CardWrapper,
+
 } from "./styles";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 import { employeeSliceAction, employeeSliceSelectors } from "store/redux/employeeSlice/employeeSlice";
@@ -20,30 +23,30 @@ function OutputForm({person}: any) {
   const onDelete = () =>{
     dispatch(employeeSliceAction.deleteCard(person))
   };
-  const removeAllEmployees = () =>{
-    dispatch(employeeSliceAction.deleteCards())
-  };
+
   return (
-    <EmployeesWrapper>
-      <OutputWrapper>
-        <LabelWrapper>Name</LabelWrapper>
-        <UserText>{person.name}</UserText>
-      </OutputWrapper>
-      <OutputWrapper>
-        <LabelWrapper>Surname</LabelWrapper>
-        <UserText>{person.surname}</UserText>
-      </OutputWrapper>
-      <OutputWrapper>
-        <LabelWrapper>Age</LabelWrapper>
-        <UserText>{person.age}</UserText>
-      </OutputWrapper>
-      <OutputWrapper>
-        <LabelWrapper>Job Position</LabelWrapper>
-        <UserText>{person.job_position}</UserText>
-        <Button name="Delete" isRed onClick={onDelete}/>
-      </OutputWrapper>
-      <Button name="Remove All Employees!" isRed onClick={removeAllEmployees}/>
-    </EmployeesWrapper>
+    
+      <EmployeesWrapper>
+        <CardWrapper>
+            <OutputWrapper>
+              <LabelWrapper>Name</LabelWrapper>
+              <UserText>{person.name}</UserText>
+            </OutputWrapper>
+            <OutputWrapper>
+              <LabelWrapper>Surname</LabelWrapper>
+              <UserText>{person.surname}</UserText>
+            </OutputWrapper>
+            <OutputWrapper>
+              <LabelWrapper>Age</LabelWrapper>
+              <UserText>{person.age}</UserText>
+            </OutputWrapper>
+            <OutputWrapper>
+              <LabelWrapper>Job Position</LabelWrapper>
+              <UserText>{person.job_position}</UserText>
+            </OutputWrapper>
+        </CardWrapper>
+        <ButtonWrapper><Button name="Delete" isRed onClick={onDelete}/></ButtonWrapper>
+      </EmployeesWrapper>
   );
 }
 

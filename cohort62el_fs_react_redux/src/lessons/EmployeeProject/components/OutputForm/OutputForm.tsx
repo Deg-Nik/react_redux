@@ -9,11 +9,8 @@ import {
   CardWrapper,
 
 } from "./styles";
-import { useAppDispatch, useAppSelector } from "store/hooks";
-import { employeeSliceAction, employeeSliceSelectors } from "store/redux/employeeSlice/employeeSlice";
-import { EmployeeData } from "lessons/EmployeeProject/types";
-
-
+import { useAppDispatch } from "store/hooks";
+import { employeeSliceAction } from "store/redux/employeeSlice/employeeSlice";
 
 
 function OutputForm({person}: any) {

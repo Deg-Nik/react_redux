@@ -20,6 +20,7 @@ function OutputForm({person}: any) {
 
   const dispatch = useAppDispatch()
   
+  
   const onDelete = () =>{
     dispatch(employeeSliceAction.deleteCard(person.id))
   };
@@ -45,7 +46,9 @@ function OutputForm({person}: any) {
               <UserText>{person.job_position}</UserText>
             </OutputWrapper>
         </CardWrapper>
-        <ButtonWrapper><Button name="Delete" isRed onClick={onDelete}/></ButtonWrapper>
+        <ButtonWrapper>
+        <Button name="Delete" isRed onClick={onDelete}/>
+        </ButtonWrapper>
       </EmployeesWrapper>
   );
 }

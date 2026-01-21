@@ -9,10 +9,10 @@ import Button from "components/Button/Button";
 
 
 export default function Employees() {
-
+  const personList = useAppSelector(employeeSliceSelectors.person);
   const dispatch = useAppDispatch()
   const employees = useAppSelector(employeeSliceSelectors.person);
-   const removeAllEmployees = () =>{
+  const removeAllEmployees = () =>{
     dispatch(employeeSliceAction.deleteCards())
   };
 
@@ -23,7 +23,9 @@ export default function Employees() {
         <OutputForm key={v4()} person={person} />
       ))}
       </UserCard>
-      <ButtonWP><Button name="Remove All Employees" isRed onClick={removeAllEmployees}/></ButtonWP>
+      <ButtonWP>
+          {personList.length >= 2 &&(<Button name="Remove All Employees" isRed onClick={removeAllEmployees}/>)}
+        </ButtonWP>
     </PageWrapperEmployees>
   );
 }

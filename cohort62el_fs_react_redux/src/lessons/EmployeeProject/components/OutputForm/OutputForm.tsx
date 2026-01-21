@@ -1,5 +1,4 @@
-
-import Button from "components/Button/Button";
+import Button from "components/Button/Button"
 import {
   EmployeesWrapper,
   OutputWrapper,
@@ -7,47 +6,42 @@ import {
   UserText,
   ButtonWrapper,
   CardWrapper,
+} from "./styles"
+import { useAppDispatch } from "store/hooks"
+import { employeeSliceAction } from "store/redux/employeeSlice/employeeSlice"
 
-} from "./styles";
-import { useAppDispatch } from "store/hooks";
-import { employeeSliceAction } from "store/redux/employeeSlice/employeeSlice";
-
-
-function OutputForm({person}: any) {
-
+function OutputForm({ person }: any) {
   const dispatch = useAppDispatch()
-  
-  
-  const onDelete = () =>{
+
+  const onDelete = () => {
     dispatch(employeeSliceAction.deleteCard(person.id))
-  };
+  }
 
   return (
-    
-      <EmployeesWrapper>
-        <CardWrapper>
-            <OutputWrapper>
-              <LabelWrapper>Name</LabelWrapper>
-              <UserText>{person.name}</UserText>
-            </OutputWrapper>
-            <OutputWrapper>
-              <LabelWrapper>Surname</LabelWrapper>
-              <UserText>{person.surname}</UserText>
-            </OutputWrapper>
-            <OutputWrapper>
-              <LabelWrapper>Age</LabelWrapper>
-              <UserText>{person.age}</UserText>
-            </OutputWrapper>
-            <OutputWrapper>
-              <LabelWrapper>Job Position</LabelWrapper>
-              <UserText>{person.job_position}</UserText>
-            </OutputWrapper>
-        </CardWrapper>
-        <ButtonWrapper>
-        <Button name="Delete" isRed onClick={onDelete}/>
-        </ButtonWrapper>
-      </EmployeesWrapper>
-  );
+    <EmployeesWrapper>
+      <CardWrapper>
+        <OutputWrapper>
+          <LabelWrapper>Name</LabelWrapper>
+          <UserText>{person.name}</UserText>
+        </OutputWrapper>
+        <OutputWrapper>
+          <LabelWrapper>Surname</LabelWrapper>
+          <UserText>{person.surname}</UserText>
+        </OutputWrapper>
+        <OutputWrapper>
+          <LabelWrapper>Age</LabelWrapper>
+          <UserText>{person.age}</UserText>
+        </OutputWrapper>
+        <OutputWrapper>
+          <LabelWrapper>Job Position</LabelWrapper>
+          <UserText>{person.job_position}</UserText>
+        </OutputWrapper>
+      </CardWrapper>
+      <ButtonWrapper>
+        <Button name="Delete" isRed onClick={onDelete} />
+      </ButtonWrapper>
+    </EmployeesWrapper>
+  )
 }
 
-export default OutputForm;
+export default OutputForm

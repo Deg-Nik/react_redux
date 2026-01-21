@@ -1,16 +1,15 @@
-import { useFormik } from "formik";
-import * as Yup from "yup";
+import { useFormik } from "formik"
+import * as Yup from "yup"
 
-import Button from "components/Button/Button";
-import Input from "components/Input/Input";
+import Button from "components/Button/Button"
+import Input from "components/Input/Input"
 
-
-import { CREATE_FORM_VALUES } from "./types";
-import { CreateFormContainer, InputsContainer} from "./styles";
-import { useAppDispatch } from "store/hooks";
-import { employeeSliceAction } from "store/redux/employeeSlice/employeeSlice";
-import { EmployeeData } from "lessons/EmployeeProject/types";
-import { v4 } from "uuid";
+import { CREATE_FORM_VALUES } from "./types"
+import { CreateFormContainer, InputsContainer } from "./styles"
+import { useAppDispatch } from "store/hooks"
+import { employeeSliceAction } from "store/redux/employeeSlice/employeeSlice"
+import { EmployeeData } from "lessons/EmployeeProject/types"
+import { v4 } from "uuid"
 
 const validationShema = Yup.object().shape({
   [CREATE_FORM_VALUES.NAME]: Yup.string()
@@ -27,36 +26,33 @@ const validationShema = Yup.object().shape({
     .max(3, "max 3 simbols"),
   [CREATE_FORM_VALUES.JOB_POSITION]: Yup.string()
     .min(1, "min 1 simbols")
-    .max(30, "max 30 simbols"),  
-});
-
-
+    .max(30, "max 30 simbols"),
+})
 
 function CreateForm() {
-
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch()
 
   const formik = useFormik({
-      initialValues: {
-        [CREATE_FORM_VALUES.NAME]: "",
-        [CREATE_FORM_VALUES.SURNAME]: "",
-        [CREATE_FORM_VALUES.AGE]: "",
-        [CREATE_FORM_VALUES.JOB_POSITION]: "",
-      },
-      validationSchema: validationShema,
-      validateOnChange: false,
-      onSubmit: (values) => {
-        const newEmployee: EmployeeData = {id: v4(),...values}
+    initialValues: {
+      [CREATE_FORM_VALUES.NAME]: "",
+      [CREATE_FORM_VALUES.SURNAME]: "",
+      [CREATE_FORM_VALUES.AGE]: "",
+      [CREATE_FORM_VALUES.JOB_POSITION]: "",
+    },
+    validationSchema: validationShema,
+    validateOnChange: false,
+    onSubmit: values => {
+      const newEmployee: EmployeeData = { id: v4(), ...values }
 
-        dispatch(employeeSliceAction.personCard(newEmployee));      // передаем данные введенные пользователем с values 
-        console.log("formik");
-        console.log(values);
-      },
-    });
+      dispatch(employeeSliceAction.personCard(newEmployee)) // передаем данные введенные пользователем с values
+      console.log("formik")
+      console.log(values)
+    },
+  })
   return (
     <CreateFormContainer onSubmit={formik.handleSubmit}>
       <InputsContainer>
-          <Input
+        <Input
           id="name-id"
           name={CREATE_FORM_VALUES.NAME}
           placeholder="Enter your name"
@@ -100,4 +96,4 @@ function CreateForm() {
     </CreateFormContainer>
   )
 }
-export default CreateForm;
+export default CreateForm

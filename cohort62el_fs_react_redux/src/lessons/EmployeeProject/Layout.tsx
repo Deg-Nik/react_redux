@@ -10,7 +10,6 @@ import {
 } from "./styles"
 import type { LayoutProps } from "./types"
 
-
 function Layout({ children }: LayoutProps) {
   return (
     <LayoutWrapper>

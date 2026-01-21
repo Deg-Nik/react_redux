@@ -12,18 +12,23 @@ export const employeeSlice  = createAppSlice({
   name: "EMPLOYEE_CARD",
   initialState: employeeInitialState,
   reducers:{
-    personCard: (state: EmployeeInitialState,action: PayloadAction<EmployeeData>) => {
+    personCard: (state: EmployeeInitialState, action: PayloadAction<EmployeeData>) => {
       state.person.push(action.payload)
       console.log(action);
       
     },
-    deleteCard: () => employeeInitialState,
+    deleteCard: (
+      state: EmployeeInitialState,
+      action: PayloadAction<string>
+    ) =>{
+      state.person = state.person.filter(
+        (user)=> user.id !== action.payload
+      );
+    } ,
     deleteCards: () => employeeInitialState,
   },
   selectors: {
-    person: (state: EmployeeInitialState) => {
-      return state.person
-    }
+    person: (state: EmployeeInitialState) => state.person
   }
 })
 

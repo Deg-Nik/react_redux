@@ -9,8 +9,9 @@ import {
 } from "./styles"
 import { useAppDispatch } from "store/hooks"
 import { employeeSliceAction } from "store/redux/employeeSlice/employeeSlice"
+import { OutputProps } from "./types"
 
-function OutputForm({ person }: any) {
+function OutputForm( {person}: OutputProps) {
   const dispatch = useAppDispatch()
 
   const onDelete = () => {

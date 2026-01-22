@@ -10,4 +10,5 @@ export enum ROUTES {
   NOT_FOUND = "*",
   CREATE_EMPLOYEE = "/create_employee",
   EMPLOYEES = '/employees',
+  WEATHERS = '/weathers'
 }

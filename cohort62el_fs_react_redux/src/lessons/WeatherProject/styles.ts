@@ -46,7 +46,7 @@ export const Main = styled.main`
   justify-content: center;
   flex: 1;
   padding: 40px;
-  background-color: #112233;
+  background-image: url("/background.jpg");
 `;
 
 

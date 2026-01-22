@@ -1,7 +1,6 @@
 import { useAppDispatch, useAppSelector } from "store/hooks"
 import OutputForm from "../components/OutputForm/OutputForm"
 import { PageWrapperEmployees, ButtonWP, UserCard } from "./styles"
-import { v4 } from "uuid"
 import {
   employeeSliceAction,
   employeeSliceSelectors,
@@ -19,7 +18,7 @@ export default function Employees() {
     <PageWrapperEmployees>
       <UserCard>
         {employees.map(person => (
-          <OutputForm key={v4()} person={person} />
+          <OutputForm key={person.id} person={person} />
         ))}
       </UserCard>
       <ButtonWP>

@@ -9,5 +9,6 @@ export enum ROUTES {
   TUI = "/client/tui",
   NOT_FOUND = "*",
   CREATE_EMPLOYEE = "/create_employee",
-  EMPLOYEES = '/employees',
+  EMPLOYEES = "/employees",
+  WEATHERS = "/weathers",
 }

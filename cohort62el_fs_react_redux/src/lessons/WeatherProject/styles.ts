@@ -17,7 +17,8 @@ export const Header = styled.header`
   height: 80px;
   border-bottom: 2px solid black;
   padding: 42px 84px;
-  background-color: #122d4d80;
+  background-color: #122D4D80;
+  border-color: #D2D2D2;
 `
 
 export const Logo = styled.div`

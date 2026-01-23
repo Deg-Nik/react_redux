@@ -1,7 +1,11 @@
+import Input from "components/Input/Input";
+import { HomeContainer } from "./styles";
 
 
 export default function HomePage() {
   return (
-    <div>HomePage</div>
+    <HomeContainer>
+      <Input id={""} name={""} placeholder={""} label={""}></Input>
+    </HomeContainer>
   )
 }

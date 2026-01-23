@@ -1,6 +1,7 @@
 import { createAppSlice } from "store/createAppSlice"
 import { WeatherInitialState } from "./types"
 import { PayloadAction } from "@reduxjs/toolkit"
+import { WeatherData } from "lessons/WeatherProject/types"
 
 const weatherInitialState: WeatherInitialState = {
   error: undefined,
@@ -12,14 +13,14 @@ export const weatherSlice = createAppSlice({
   name: "WEATHER_CARD",
   initialState: weatherInitialState,
   reducers: {
-    weaterCard: (
+    weatherCard: (
       state: WeatherInitialState,
       // action: PayloadAction<WeatherData>,
       action: PayloadAction,
     ) => {
       state.weatherData.push(action.payload)
     },
-    deleteCard: (state: WeatherInitialState, action: PayloadAction<string>) => {
+    deleteCard: (state: WeatherInitialState, action: PayloadAction<WeatherData>) => {
       state.weatherData = state.weatherData.filter(
         // data => data.id !== action.payload,
       )

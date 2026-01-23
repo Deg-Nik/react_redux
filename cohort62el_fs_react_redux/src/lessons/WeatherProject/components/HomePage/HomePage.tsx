@@ -8,7 +8,7 @@ import Input from "components/Input/Input"
 import { HOME_FORM_VALUES } from "./types"
 import { HomeFormContainer, InputsContainer } from "./styles"
 import { useAppDispatch } from "store/hooks"
-import { weatherSliceAction } from "store/"
+import { weatherSliceAction } from "store/redux/weatherSlice/weatherSlice"
 import { WeatherData } from "lessons/WeatherProject/types"
 import { v4 } from "uuid"
 
@@ -33,7 +33,7 @@ function HomePage() {
     onSubmit: values => {
       const newCity: WeatherData = { id: v4(), ...values }
 
-      dispatch(weatherSliceAction.personCard(newCity)) // передаем данные введенные пользователем с values
+      dispatch(weatherSliceAction.weatherCard(newCity)) // передаем данные введенные пользователем с values
       console.log("formik")
       console.log(values)
     },
@@ -42,7 +42,7 @@ function HomePage() {
     <HomeFormContainer onSubmit={formik.handleSubmit}>
       <InputsContainer>
         <Input
-          id="name-id"
+          id="city-id"
           name={HOME_FORM_VALUES.CITY}
           placeholder="Enter your city"
           label="City*"

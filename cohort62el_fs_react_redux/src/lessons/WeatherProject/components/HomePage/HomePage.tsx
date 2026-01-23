@@ -1,4 +1,3 @@
-
 import { useFormik } from "formik"
 import * as Yup from "yup"
 
@@ -17,7 +16,6 @@ const validationShema = Yup.object().shape({
     .required("City field is required")
     .min(2, "minimum 2 simbols")
     .max(50, "maximum 50 simbols"),
-
 })
 
 function HomePage() {
@@ -50,7 +48,6 @@ function HomePage() {
           onChange={formik.handleChange}
           error={formik.errors[HOME_FORM_VALUES.CITY]}
         />
-
       </InputsContainer>
       <Button name="Cearch" type="submit" />
     </HomeFormContainer>

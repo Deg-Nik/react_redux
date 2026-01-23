@@ -6,6 +6,8 @@ import { ROUTES } from "constants/routes"
 import CreateEmployee from "lessons/EmployeeProject/CreateEmployee/CreateEmployee"
 import Employees from "lessons/EmployeeProject/Employees/Employees"
 import Layout from "lessons/WeatherProject/Loyout"
+import Home from "lessons/WeatherProject/Home/Home"
+import Weathers from "lessons/WeatherProject/Weathers/Weathers"
 
 
 function App() {
@@ -22,7 +24,9 @@ function App() {
       </Layout> */}
       <Layout>
         <Routes>
-          
+          <Route path={ROUTES.NOT_FOUND} element="Page Not Found" />
+          <Route path={ROUTES.HOME} element={<Home />}/>
+          <Route path={ROUTES.WEATHERS} element={<Weathers/>}/>
         </Routes>
       </Layout>
     </BrowserRouter>

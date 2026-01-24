@@ -5,7 +5,21 @@ import Button from "lessons/WeatherProject/input_button/Button/Button"
 import Input from "lessons/WeatherProject/input_button/Input/Input"
 
 import { HOME_FORM_VALUES } from "./types"
-import { HomeFormContainer, InputsContainer } from "./styles"
+import {
+  APIError,
+  ButtonsContainer,
+  City,
+  HomeFormContainer,
+  HomePageContainer,
+  InfoContainer,
+  InputsContainer,
+  RedText,
+  ResultDiv,
+  Temp,
+  TempContainer,
+  Weather,
+  WhiteText,
+} from "./styles"
 import { useAppDispatch } from "store/hooks"
 import { weatherSliceAction } from "store/redux/weatherSlice/weatherSlice"
 import { WeatherData } from "lessons/WeatherProject/types"
@@ -32,24 +46,51 @@ function HomePage() {
       const newCity: WeatherData = { id: v4(), ...values }
 
       dispatch(weatherSliceAction.weatherCard(newCity)) // передаем данные введенные пользователем с values
-      console.log("formik")
-      console.log(values)
     },
   })
   return (
-    <HomeFormContainer onSubmit={formik.handleSubmit}>
-      <InputsContainer>
-        <Input
-          id="city-id"
-          name={HOME_FORM_VALUES.CITY}
-          placeholder="Enter city"
-          value={formik.values[HOME_FORM_VALUES.CITY]}
-          onChange={formik.handleChange}
-          error={formik.errors[HOME_FORM_VALUES.CITY]}
-        />
-      </InputsContainer>
-      <Button name="Search" type="submit" />
-    </HomeFormContainer>
+    <HomePageContainer>
+      <HomeFormContainer onSubmit={formik.handleSubmit}>
+        <InputsContainer>
+          <Input
+            id="city-id"
+            name={HOME_FORM_VALUES.CITY}
+            placeholder="Enter city"
+            value={formik.values[HOME_FORM_VALUES.CITY]}
+            onChange={formik.handleChange}
+            error={formik.errors[HOME_FORM_VALUES.CITY]}
+          />
+        </InputsContainer>
+        <Button name="Search" type="submit" />
+      </HomeFormContainer>
+
+      <ResultDiv>
+        {/* <InfoContainer>
+          <TempContainer>
+            <Temp>18°</Temp>
+            <City>Colorado</City>
+          </TempContainer>
+
+          <Weather>
+            {/* {Array.from({ length: 3 }).map((_, index) => (
+              <img key={index} src={weather.icon} alt="weather icon" />
+            ))} */}
+        {/*  </Weather>
+        </InfoContainer>
+
+        <ButtonsContainer>
+          <Button name={"Save"}></Button>
+          <Button name={"Delete"}></Button>
+        </ButtonsContainer> */}
+
+        <APIError>
+          <RedText>API Error</RedText>
+          <WhiteText>Something went wrong with API data</WhiteText>
+          <Button name={"Delete"}></Button>
+        </APIError>
+
+      </ResultDiv>
+    </HomePageContainer>
   )
 }
 export default HomePage

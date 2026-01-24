@@ -1,8 +1,8 @@
 import { useFormik } from "formik"
 import * as Yup from "yup"
 
-import Button from "components/Button/Button"
-import Input from "components/Input/Input"
+import Button from "lessons/WeatherProject/input_button/Button/Button"
+import Input from "lessons/WeatherProject/input_button/Input/Input"
 
 import { HOME_FORM_VALUES } from "./types"
 import { HomeFormContainer, InputsContainer } from "./styles"
@@ -42,14 +42,13 @@ function HomePage() {
         <Input
           id="city-id"
           name={HOME_FORM_VALUES.CITY}
-          placeholder="Enter your city"
-          label="City*"
+          placeholder="Enter city"
           value={formik.values[HOME_FORM_VALUES.CITY]}
           onChange={formik.handleChange}
           error={formik.errors[HOME_FORM_VALUES.CITY]}
         />
       </InputsContainer>
-      <Button name="Cearch" type="submit" />
+      <Button name="Search" type="submit" />
     </HomeFormContainer>
   )
 }

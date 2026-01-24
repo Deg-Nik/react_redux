@@ -6,16 +6,19 @@ import Input from "lessons/WeatherProject/input_button/Input/Input"
 
 import { HOME_FORM_VALUES } from "./types"
 import {
+  APIError,
   ButtonsContainer,
   City,
   HomeFormContainer,
   HomePageContainer,
   InfoContainer,
   InputsContainer,
+  RedText,
   ResultDiv,
   Temp,
   TempContainer,
   Weather,
+  WhiteText,
 } from "./styles"
 import { useAppDispatch } from "store/hooks"
 import { weatherSliceAction } from "store/redux/weatherSlice/weatherSlice"
@@ -62,8 +65,7 @@ function HomePage() {
       </HomeFormContainer>
 
       <ResultDiv>
-        <InfoContainer>
-
+        {/* <InfoContainer>
           <TempContainer>
             <Temp>18°</Temp>
             <City>Colorado</City>
@@ -73,13 +75,20 @@ function HomePage() {
             {/* {Array.from({ length: 3 }).map((_, index) => (
               <img key={index} src={weather.icon} alt="weather icon" />
             ))} */}
-          </Weather>
+        {/*  </Weather>
         </InfoContainer>
 
         <ButtonsContainer>
           <Button name={"Save"}></Button>
           <Button name={"Delete"}></Button>
-        </ButtonsContainer>
+        </ButtonsContainer> */}
+
+        <APIError>
+          <RedText>API Error</RedText>
+          <WhiteText>Something went wrong with API data</WhiteText>
+          <Button name={"Delete"}></Button>
+        </APIError>
+
       </ResultDiv>
     </HomePageContainer>
   )

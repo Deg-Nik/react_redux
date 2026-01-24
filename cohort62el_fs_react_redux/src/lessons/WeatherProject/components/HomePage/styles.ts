@@ -45,17 +45,15 @@ export const ResultDiv = styled.div`
 `
 export const InfoContainer = styled.div`
   display: flex;
-  /* flex-direction: column; */
   gap: 20px;
   padding: 20px;
   justify-content: space-evenly;
 `
 
 export const TempContainer = styled.div`
-  /* margin: 30px; */
   width: 85px;
   height: 70px;
-  /* margin-left: 40px; */
+  
 `
 
 export const Temp = styled.p`
@@ -86,3 +84,37 @@ export const ButtonsContainer = styled.div`
 export const Button = styled.button`
   background-color: none;
 `
+export const ErrorContainer = styled.div`
+
+`;
+
+export const APIError = styled.div`
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+  align-items: center;
+  width: 709px;
+  height: 220px;
+  border: none;
+  border-radius: 16px;
+  background-color: rgba(47, 72, 111, 0.75);
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: rgba(11, 27, 52, 0.85);
+  }
+`
+
+export const RedText = styled.p`
+margin-top: 10px;
+font-size: 57px;
+font-weight: 500;
+color: red;
+`;
+
+export const WhiteText = styled.p`
+margin-bottom: 10px;
+font-size: 18px;
+font-weight: 400;
+color: white;
+`;

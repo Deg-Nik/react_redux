@@ -35,6 +35,8 @@ const validationShema = Yup.object().shape({
 function HomePage() {
   const dispatch = useAppDispatch()
 
+  const hasApiError = true // при подключении redux true нужно заменить на const hasApiError = useAppSelector(state => state.weather.hasError);
+
   const formik = useFormik({
     initialValues: {
       [HOME_FORM_VALUES.CITY]: "",
@@ -65,7 +67,7 @@ function HomePage() {
       </HomeFormContainer>
 
       <ResultDiv>
-        {/* <InfoContainer>
+        <InfoContainer>
           <TempContainer>
             <Temp>18°</Temp>
             <City>Colorado</City>
@@ -75,20 +77,32 @@ function HomePage() {
             {/* {Array.from({ length: 3 }).map((_, index) => (
               <img key={index} src={weather.icon} alt="weather icon" />
             ))} */}
-        {/*  </Weather>
+          </Weather>
         </InfoContainer>
 
         <ButtonsContainer>
-          <Button name={"Save"}></Button>
-          <Button name={"Delete"}></Button>
-        </ButtonsContainer> */}
+          <Button
+            name="Save"
+            type="submit"
+            variant="delete" // ← визуально как delete
+            isDisabled={!formik.isValid || formik.isSubmitting}
+          ></Button>
+          <Button
+            name="Delete"
+            variant="delete" // ← визуально как delete
+            isDisabled={!hasApiError}
+          ></Button>
+        </ButtonsContainer>
 
         <APIError>
           <RedText>API Error</RedText>
           <WhiteText>Something went wrong with API data</WhiteText>
-          <Button name={"Delete"}></Button>
+          <Button
+            name="Delete"
+            variant="delete" // ← визуально как delete
+            isDisabled={!hasApiError}
+          ></Button>
         </APIError>
-
       </ResultDiv>
     </HomePageContainer>
   )

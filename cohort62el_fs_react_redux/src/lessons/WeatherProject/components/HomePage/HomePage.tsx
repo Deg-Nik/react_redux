@@ -34,8 +34,6 @@ function HomePage() {
       const newCity: WeatherData = { id: v4(), ...values }
 
       dispatch(weatherSliceAction.weatherCard(newCity)) // передаем данные введенные пользователем с values
-      console.log("formik")
-      console.log(values)
     },
   })
   return (

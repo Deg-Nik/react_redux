@@ -1,8 +1,7 @@
-
+import { WeatherData } from "lessons/WeatherProject/types";
 
 export interface WeatherInitialState {
-  error: undefined,
-  currentWeather: undefined,
-  // weatherData: WeaterData [],
-  weatherData: any,
+  error:string | undefined,
+  currentWeather:string | undefined,
+  weatherData: WeatherData [],
 }

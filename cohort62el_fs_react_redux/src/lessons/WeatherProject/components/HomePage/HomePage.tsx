@@ -1,12 +1,22 @@
-
 import { useFormik } from "formik"
 import * as Yup from "yup"
 
-import Button from "components/Button/Button"
-import Input from "components/Input/Input"
+import Button from "lessons/WeatherProject/input_button/Button/Button"
+import Input from "lessons/WeatherProject/input_button/Input/Input"
 
 import { HOME_FORM_VALUES } from "./types"
-import { HomeFormContainer, InputsContainer } from "./styles"
+import {
+  ButtonsContainer,
+  City,
+  HomeFormContainer,
+  HomePageContainer,
+  InfoContainer,
+  InputsContainer,
+  ResultDiv,
+  Temp,
+  TempContainer,
+  Weather,
+} from "./styles"
 import { useAppDispatch } from "store/hooks"
 import { weatherSliceAction } from "store/redux/weatherSlice/weatherSlice"
 import { WeatherData } from "lessons/WeatherProject/types"
@@ -17,7 +27,6 @@ const validationShema = Yup.object().shape({
     .required("City field is required")
     .min(2, "minimum 2 simbols")
     .max(50, "maximum 50 simbols"),
-
 })
 
 function HomePage() {
@@ -37,21 +46,42 @@ function HomePage() {
     },
   })
   return (
-    <HomeFormContainer onSubmit={formik.handleSubmit}>
-      <InputsContainer>
-        <Input
-          id="city-id"
-          name={HOME_FORM_VALUES.CITY}
-          placeholder="Enter your city"
-          label="City*"
-          value={formik.values[HOME_FORM_VALUES.CITY]}
-          onChange={formik.handleChange}
-          error={formik.errors[HOME_FORM_VALUES.CITY]}
-        />
+    <HomePageContainer>
+      <HomeFormContainer onSubmit={formik.handleSubmit}>
+        <InputsContainer>
+          <Input
+            id="city-id"
+            name={HOME_FORM_VALUES.CITY}
+            placeholder="Enter city"
+            value={formik.values[HOME_FORM_VALUES.CITY]}
+            onChange={formik.handleChange}
+            error={formik.errors[HOME_FORM_VALUES.CITY]}
+          />
+        </InputsContainer>
+        <Button name="Search" type="submit" />
+      </HomeFormContainer>
 
-      </InputsContainer>
-      <Button name="Cearch" type="submit" />
-    </HomeFormContainer>
+      <ResultDiv>
+        <InfoContainer>
+
+          <TempContainer>
+            <Temp>18°</Temp>
+            <City>Colorado</City>
+          </TempContainer>
+
+          <Weather>
+            {/* {Array.from({ length: 3 }).map((_, index) => (
+              <img key={index} src={weather.icon} alt="weather icon" />
+            ))} */}
+          </Weather>
+        </InfoContainer>
+
+        <ButtonsContainer>
+          <Button name={"Save"}></Button>
+          <Button name={"Delete"}></Button>
+        </ButtonsContainer>
+      </ResultDiv>
+    </HomePageContainer>
   )
 }
 export default HomePage

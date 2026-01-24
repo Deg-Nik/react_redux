@@ -15,14 +15,13 @@ export const weatherSlice = createAppSlice({
   reducers: {
     weatherCard: (
       state: WeatherInitialState,
-      // action: PayloadAction<WeatherData>,
-      action: PayloadAction,
+      action: PayloadAction<WeatherData>,
     ) => {
       state.weatherData.push(action.payload)
     },
-    deleteCard: (state: WeatherInitialState, action: PayloadAction<WeatherData>) => {
+    deleteCard: (state: WeatherInitialState, action: PayloadAction<string>) => {
       state.weatherData = state.weatherData.filter(
-        // data => data.id !== action.payload,
+        data => data.id !== action.payload,
       )
     },
   },

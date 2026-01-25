@@ -83,8 +83,8 @@ function HomePage() {
       <ResultDiv>
         <InfoContainer>
           <TempContainer>
-            <Temp>18°</Temp>
-            <City>Colorado</City>
+            <Temp></Temp>
+            <City></City>
           </TempContainer>
 
           <Weather>

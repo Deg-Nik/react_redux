@@ -20,10 +20,11 @@ import {
   Weather,
   WhiteText,
 } from "./styles"
-import { useAppDispatch } from "store/hooks"
+import { useAppDispatch, useAppSelector } from "store/hooks"
 import { weatherSliceAction } from "store/redux/weatherSlice/weatherSlice"
 import { WeatherData } from "lessons/WeatherProject/types"
 import { v4 } from "uuid"
+
 
 
 const validationShema = Yup.object().shape({
@@ -89,8 +90,8 @@ function HomePage() {
       <ResultDiv>
         <InfoContainer>
           <TempContainer>
-            <Temp>12</Temp>
-            <City>Colorado</City>
+            <Temp>{}</Temp>
+            <City>{}</City>
           </TempContainer>
 
           <Weather>
@@ -114,7 +115,7 @@ function HomePage() {
           ></Button>
         </ButtonsContainer>
 
-        {/* <APIError>
+       <APIError>
           <RedText>API Error</RedText>
           <WhiteText>Something went wrong with API data</WhiteText>
           <Button
@@ -122,7 +123,7 @@ function HomePage() {
             variant="delete" // ← визуально как delete
             isDisabled={!hasApiError}
           ></Button>
-        </APIError> */}
+        </APIError> 
       </ResultDiv>
     </HomePageContainer>
   )

@@ -5,6 +5,8 @@ export interface LayoutProps {
 }
 
 export interface WeatherData {
+  cityName: ReactNode;
+  temperature: ReactNode;
   id: string;
   city: string;
 

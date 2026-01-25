@@ -1,4 +1,3 @@
-import { PageWrapper } from "lessons/WeatherProject/Home/styles"
 import { useAppDispatch, useAppSelector } from "store/hooks"
 import { weatherSliceAction, weatherSliceSelectors } from "store/redux/weatherSlice/weatherSlice"
 import {
@@ -9,10 +8,7 @@ import {
   DeleteButton,
   Icons,
   Left,
-  Nav,
-  NavLink,
   Temp,
-  Title,
 } from "./styles"
 import { WeatherData } from "lessons/WeatherProject/types"
 
@@ -34,12 +30,6 @@ function WeathersPage() {
   }
 
   return (
-    <PageWrapper>
-      <Title></Title>
-      <Nav>
-        <NavLink></NavLink>
-        <NavLink></NavLink>
-      </Nav>
       <CardsWrapper>
         {savedWeathers.map((item: WeatherData) => (
           <Card key={item.id}>
@@ -49,13 +39,18 @@ function WeathersPage() {
             </Left>
 
             <Icons>
-              {item.weather.map((w, index) => (
-                <img
-                key={index}
-                src={`http://openweathermap.org/img/w/${w.icon}.png`}
+              <img
+                src={`https://openweathermap.org/img/wn/${item.icon}@2x.png`}
                 alt="weather icon"
-                />
-              ))}
+              />
+              <img
+                src={`https://openweathermap.org/img/wn/${item.icon}@2x.png`}
+                alt="weather icon"
+              />
+              <img
+                src={`https://openweathermap.org/img/wn/${item.icon}@2x.png`}
+                alt="weather icon"
+              />
             </Icons>
 
             <DeleteButton onClick={() => handleDelete(item.id)}>
@@ -63,14 +58,15 @@ function WeathersPage() {
             </DeleteButton>
           </Card>
         ))}
-      </CardsWrapper>
-      {savedWeathers.length > 0 && (
+        {savedWeathers.length > 2 && (
         <DeleteAllButton onClick={handleDeleteAll}>
           Delete All Weathers
         </DeleteAllButton>
-      )}
-    </PageWrapper>
-  )
-}
-
+        )}
+      </CardsWrapper>
+      )
+    }
+    
+   
+  
 export default WeathersPage

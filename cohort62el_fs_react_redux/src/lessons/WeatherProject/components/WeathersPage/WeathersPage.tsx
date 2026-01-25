@@ -4,12 +4,17 @@ import { weatherSliceAction, weatherSliceSelectors } from "store/redux/weatherSl
 import {
   Card,
   CardsWrapper,
+  City,
   DeleteAllButton,
   DeleteButton,
+  Icons,
+  Left,
   Nav,
   NavLink,
+  Temp,
   Title,
 } from "./styles"
+import { WeatherData } from "lessons/WeatherProject/types"
 
 
 function WeathersPage() {
@@ -30,16 +35,28 @@ function WeathersPage() {
 
   return (
     <PageWrapper>
-      <Title>Weather app</Title>
+      <Title></Title>
       <Nav>
-        <NavLink>Home</NavLink>
-        <NavLink>Weathers</NavLink>
+        <NavLink></NavLink>
+        <NavLink></NavLink>
       </Nav>
       <CardsWrapper>
-        {savedWeathers.map(item => (
+        {savedWeathers.map((item: WeatherData) => (
           <Card key={item.id}>
-            <h3>{item.city}</h3>
-            <p>Temperature: {item.temp}°C</p>
+            <Left>
+              <Temp>{Math.round(item.temp)}°</Temp>
+              <City>{item.city}</City>
+            </Left>
+
+            <Icons>
+              {item.weather.map((w, index) => (
+                <img
+                key={index}
+                src={`http://openweathermap.org/img/w/${w.icon}.png`}
+                alt="weather icon"
+                />
+              ))}
+            </Icons>
 
             <DeleteButton onClick={() => handleDelete(item.id)}>
               Delete

@@ -6,6 +6,7 @@ import { employeeSlice } from "./redux/employeeSlice/employeeSlice"
 import { weatherSlice } from "./redux/weatherSlice/weatherSlice"
 
 
+
 // `combineSlices` automatically combines the reducers using
 // their `reducerPath`s, therefore we no longer need to call `combineReducers`.
 const rootReducer = combineSlices(counterSlice, feedbackSlice, employeeSlice, weatherSlice)

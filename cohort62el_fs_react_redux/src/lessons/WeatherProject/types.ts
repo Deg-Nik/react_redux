@@ -7,5 +7,6 @@ export interface LayoutProps {
 export interface WeatherData {
   id: string;
   city: string;
-
+  temp: string;
+  weather: string[];
 }

@@ -9,6 +9,7 @@ const weatherInitialState: WeatherInitialState = {
   weatherData: [],
 }
 
+
 export const weatherSlice = createAppSlice({
   name: "WEATHER_CARD",
   initialState: weatherInitialState,

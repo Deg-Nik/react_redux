@@ -24,6 +24,7 @@ import { useAppDispatch } from "store/hooks"
 import { weatherSliceAction } from "store/redux/weatherSlice/weatherSlice"
 import { WeatherData } from "lessons/WeatherProject/types"
 import { v4 } from "uuid"
+import { data } from "react-router-dom"
 
 const validationShema = Yup.object().shape({
   [HOME_FORM_VALUES.CITY]: Yup.string()
@@ -34,6 +35,8 @@ const validationShema = Yup.object().shape({
 
 function HomePage() {
   const dispatch = useAppDispatch()
+  const API_KEY = "f09be79d24a66e5c14c0f50d0b27fe28";
+  // const API_URL = `https://api.openweathermap.org/data/2.5/weather?q=${value}&appid=${API_KEY}&units=metric`;
 
   const hasApiError = true // при подключении redux true нужно заменить на const hasApiError = useAppSelector(state => state.weather.hasError);
 
@@ -44,10 +47,22 @@ function HomePage() {
     validationSchema: validationShema,
     validateOnChange: false,
     // Это функция, которая срабатывает при отправке формы
-    onSubmit: values => {
-      const newCity: WeatherData = { id: v4(), ...values }
-
-      dispatch(weatherSliceAction.weatherCard(newCity)) // передаем данные введенные пользователем с values
+    onSubmit: async values => {
+      const city = values[HOME_FORM_VALUES.CITY]
+      try {
+        const response = await fetch(
+          `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
+        )
+        if (!response.ok) {
+          throw new Error("API error")
+        }
+        const data = await response.json()
+        const newCity: WeatherData = { id: v4(), city: city, temp: data.main.temp, weather: data.weather }
+        dispatch(weatherSliceAction.weatherCard(newCity)) // передаем данные введенные пользователем с values
+      }
+      catch(error){
+        console.error(error)
+      }      
     },
   })
   return (
@@ -102,6 +117,7 @@ function HomePage() {
             variant="delete" // ← визуально как delete
             isDisabled={!hasApiError}
           ></Button>
+          <Button name="Delete" />
         </APIError>
       </ResultDiv>
     </HomePageContainer>

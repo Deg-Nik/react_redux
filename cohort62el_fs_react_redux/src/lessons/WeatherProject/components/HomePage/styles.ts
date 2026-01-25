@@ -26,6 +26,7 @@ export const InputsContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 14px;
+  
 `
 
 export const ResultDiv = styled.div`

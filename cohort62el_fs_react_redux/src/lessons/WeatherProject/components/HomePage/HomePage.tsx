@@ -94,7 +94,7 @@ function HomePage() {
           ></Button>
         </ButtonsContainer>
 
-        <APIError>
+        {/* <APIError>
           <RedText>API Error</RedText>
           <WhiteText>Something went wrong with API data</WhiteText>
           <Button
@@ -102,7 +102,7 @@ function HomePage() {
             variant="delete" // ← визуально как delete
             isDisabled={!hasApiError}
           ></Button>
-        </APIError>
+        </APIError> */}
       </ResultDiv>
     </HomePageContainer>
   )

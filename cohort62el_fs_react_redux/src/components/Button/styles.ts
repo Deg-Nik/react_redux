@@ -38,9 +38,10 @@ export const ButtonComponent = styled.button<ButtonComponentProps>`
   justify-content: center;
   outline: none;
   border: none;
+  border-radius: 30px;
   padding: 0;
-  height: 50px;
-  width: 100%;
+  height: 48px;
+  width: 146px;
   background-color: ${({ $isRed, disabled }) =>
     generateButtonColor($isRed, disabled)};
   color: #ffffff;
@@ -53,3 +54,5 @@ export const ButtonComponent = styled.button<ButtonComponentProps>`
       generateButtonColorOnHover($isRed, disabled)};
   }
 `;
+
+

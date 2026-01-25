@@ -6,5 +6,5 @@ export const PageWrapper = styled.div`
   flex-wrap: wrap;
   align-items: flex-start;
   justify-content: center;
-  gap: 10px;
+  gap: 50px;
 `;

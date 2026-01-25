@@ -39,10 +39,6 @@ export const ResultDiv = styled.div`
   border-radius: 16px;
   background-color: rgba(47, 72, 111, 0.75);
   transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: rgba(11, 27, 52, 0.85);
-  }
 `
 export const InfoContainer = styled.div`
   display: flex;
@@ -100,10 +96,6 @@ export const APIError = styled.div`
   border-radius: 16px;
   background-color: rgba(47, 72, 111, 0.75);
   transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: rgba(11, 27, 52, 0.85);
-  }
 `
 
 export const RedText = styled.p`

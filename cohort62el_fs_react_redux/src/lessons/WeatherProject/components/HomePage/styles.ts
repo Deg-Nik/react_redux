@@ -65,6 +65,7 @@ export const City = styled.p`
 
 export const Weather = styled.div`
   display: flex;
+  justify-content: flex-end;
   width: 290px;
   height: 74px;
 `

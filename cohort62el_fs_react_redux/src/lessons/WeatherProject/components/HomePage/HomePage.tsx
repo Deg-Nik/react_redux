@@ -24,7 +24,7 @@ import { useAppDispatch } from "store/hooks"
 import { weatherSliceAction } from "store/redux/weatherSlice/weatherSlice"
 import { WeatherData } from "lessons/WeatherProject/types"
 import { v4 } from "uuid"
-import { data } from "react-router-dom"
+
 
 const validationShema = Yup.object().shape({
   [HOME_FORM_VALUES.CITY]: Yup.string()
@@ -36,7 +36,6 @@ const validationShema = Yup.object().shape({
 function HomePage() {
   const dispatch = useAppDispatch()
   const API_KEY = "f09be79d24a66e5c14c0f50d0b27fe28";
-  // const API_URL = `https://api.openweathermap.org/data/2.5/weather?q=${value}&appid=${API_KEY}&units=metric`;
 
   const hasApiError = true // при подключении redux true нужно заменить на const hasApiError = useAppSelector(state => state.weather.hasError);
 
@@ -117,7 +116,6 @@ function HomePage() {
             variant="delete" // ← визуально как delete
             isDisabled={!hasApiError}
           ></Button>
-          <Button name="Delete" />
         </APIError>
       </ResultDiv>
     </HomePageContainer>

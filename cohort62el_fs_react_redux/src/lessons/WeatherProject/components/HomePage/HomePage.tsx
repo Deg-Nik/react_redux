@@ -45,8 +45,7 @@ function HomePage() {
   const hasApiError = useAppSelector(weatherSliceSelectors.hasError)
   const isLoading = useAppSelector(weatherSliceSelectors.isLoading)
 
-const showResult = Boolean(weatherData || hasApiError || isLoading)
-
+  const showResult = Boolean(weatherData || hasApiError || isLoading)
 
   const API_KEY = "f09be79d24a66e5c14c0f50d0b27fe28"
 
@@ -74,15 +73,15 @@ const showResult = Boolean(weatherData || hasApiError || isLoading)
 
     validateOnChange: false,
 
-
     // Это функция, которая срабатывает при отправке формы
     onSubmit: async values => {
-      const city = values[HOME_FORM_VALUES.CITY]
-      dispatch(weatherSliceAction.clearCurrentWeather())
-      dispatch(weatherSliceAction.startLoading())
-      dispatch(weatherSliceAction.setError(false))
       try {
-        await new Promise(resolve => setTimeout(resolve, 3000))
+        await validationShema.validate(values)
+        const city = values[HOME_FORM_VALUES.CITY]
+        dispatch(weatherSliceAction.clearCurrentWeather())
+        dispatch(weatherSliceAction.startLoading())
+        dispatch(weatherSliceAction.setError(false))
+
         const response = await axios.get(
           `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`,
         )
@@ -96,11 +95,15 @@ const showResult = Boolean(weatherData || hasApiError || isLoading)
           icon: data.weather[0].icon,
         }
         dispatch(weatherSliceAction.weatherCard(newCity)) // передаем данные введенные пользователем с values
-         dispatch(weatherSliceAction.setError(false))
-      } catch (error) {
+        //  dispatch(weatherSliceAction.setError(false))
+      } catch (error: any) {
+        if (error.name === "ValidationError") {
+          alert(error.message)
+          return
+        }
         dispatch(weatherSliceAction.setError(true))
-        console.error(error)
-      } finally{
+        // console.error(error)
+      } finally {
         dispatch(weatherSliceAction.finishLoading())
       }
     },
@@ -118,68 +121,65 @@ const showResult = Boolean(weatherData || hasApiError || isLoading)
             error={formik.errors[HOME_FORM_VALUES.CITY]}
           />
         </InputsContainer>
-        <Button name="Search" type="submit" isDisabled={isLoading}/>
+        <Button name="Search" type="submit" isDisabled={isLoading} />
       </HomeFormContainer>
 
-{showResult && (
-  <ResultDiv>
+      {showResult && (
+        <ResultDiv>
+          {isLoading && (
+            <InfoContainer>
+              <ImgSpinner src="/Loading_2.gif" alt="Loading...." />
+            </InfoContainer>
+          )}
 
-    {isLoading && <LoadingText>Loading...</LoadingText>}
+          {hasApiError && !isLoading && (
+            <APIError>
+              <RedText>API Error</RedText>
+              <WhiteText>Something went wrong with API data</WhiteText>
+              <Button
+                name="Delete"
+                variant="delete"
+                isDisabled={!hasApiError}
+                onClick={() => {
+                  dispatch(weatherSliceAction.setError(false))
+                  dispatch(weatherSliceAction.clearCurrentWeather())
+                }}
+              />
+            </APIError>
+          )}
 
-    {hasApiError && !isLoading && (
-      <APIError>
-        <RedText>API Error</RedText>
-        <WhiteText>Something went wrong with API data</WhiteText>
-        <Button
-          name="Delete"
-          variant="delete"
-          isDisabled={!hasApiError}
-        />
-      </APIError>
-    )}
+          {weatherData && !hasApiError && !isLoading && (
+            <>
+              <InfoContainer>
+                <TempContainer>
+                  <Temp>{Math.round(weatherData.temp)}°</Temp>
+                  <City>{weatherData.city}</City>
+                </TempContainer>
 
-    {weatherData && !hasApiError && !isLoading && (
-      <>
-        <InfoContainer>
-          <TempContainer>
-            <Temp>{Math.round(weatherData.temp)}°</Temp>
-            <City>{weatherData.city}</City>
-          </TempContainer>
+                <Weather>
+                  <Img
+                    src={`https://openweathermap.org/img/w/${weatherData.weather[0].icon}.png`}
+                    alt="weather icon"
+                  />
+                  <Img
+                    src={`https://openweathermap.org/img/w/${weatherData.weather[0].icon}.png`}
+                    alt="weather icon"
+                  />
+                  <Img
+                    src={`https://openweathermap.org/img/w/${weatherData.weather[0].icon}.png`}
+                    alt="weather icon"
+                  />
+                </Weather>
+              </InfoContainer>
 
-          <Weather>
-            <Img
-              src={`https://openweathermap.org/img/wn/${weatherData.icon}@2x.png`}
-              alt="weather icon"
-            />
-            <Img
-              src={`https://openweathermap.org/img/wn/${weatherData.icon}@2x.png`}
-              alt="weather icon"
-            />
-            <Img
-              src={`https://openweathermap.org/img/wn/${weatherData.icon}@2x.png`}
-              alt="weather icon"
-            />
-          </Weather>
-        </InfoContainer>
-
-        <ButtonsContainer>
-          <Button
-            name="Save"
-            variant="delete"
-            onClick={Save}
-          />
-          <Button
-            name="Delete"
-            variant="delete"
-            onClick={Delete}
-          />
-        </ButtonsContainer>
-      </>
-    )}
-
-  </ResultDiv>
-)}
-
+              <ButtonsContainer>
+                <Button name="Save" variant="delete" onClick={Save} />
+                <Button name="Delete" variant="delete" onClick={Delete} />
+              </ButtonsContainer>
+            </>
+          )}
+        </ResultDiv>
+      )}
     </HomePageContainer>
   )
 }

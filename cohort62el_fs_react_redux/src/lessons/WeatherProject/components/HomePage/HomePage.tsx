@@ -16,7 +16,6 @@ import {
   ImgSpinner,
   InfoContainer,
   InputsContainer,
-  LoadingText,
   RedText,
   ResultDiv,
   Temp,

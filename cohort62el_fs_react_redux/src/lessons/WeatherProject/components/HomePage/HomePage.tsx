@@ -25,8 +25,6 @@ import { weatherSliceAction } from "store/redux/weatherSlice/weatherSlice"
 import { WeatherData } from "lessons/WeatherProject/types"
 import { v4 } from "uuid"
 
-
-
 const validationShema = Yup.object().shape({
   [HOME_FORM_VALUES.CITY]: Yup.string()
     .required("City field is required")
@@ -36,7 +34,7 @@ const validationShema = Yup.object().shape({
 
 function HomePage() {
   const dispatch = useAppDispatch()
-  const API_KEY = "f09be79d24a66e5c14c0f50d0b27fe28";
+  const API_KEY = "f09be79d24a66e5c14c0f50d0b27fe28"
 
   const hasApiError = true // при подключении redux true нужно заменить на const hasApiError = useAppSelector(state => state.weather.hasError);
 
@@ -51,26 +49,28 @@ function HomePage() {
       const city = values[HOME_FORM_VALUES.CITY]
       try {
         const response = await fetch(
-          `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
+          `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`,
         )
         if (!response.ok) {
           throw new Error("API error")
         }
         const data = await response.json()
-        console.log (data)
+        console.log(data)
         const newCity: WeatherData = {
-          id: v4(), city: city, temp: data.main.temp, weather: data.weather,
-          cityName: undefined,
-          temperature: undefined
-          
+          id: v4(),
+          city: city,
+          temp: data.main.temp,
+          weather: data.weather,
         }
         dispatch(weatherSliceAction.weatherCard(newCity)) // передаем данные введенные пользователем с values
-      }
-      catch(error){
+      } catch (error) {
         console.error(error)
-      }      
+      }
     },
   })
+
+  const weather = useAppSelector(state => state.WEATHER_CARD.currentWeather)
+
   return (
     <HomePageContainer>
       <HomeFormContainer onSubmit={formik.handleSubmit}>
@@ -90,14 +90,20 @@ function HomePage() {
       <ResultDiv>
         <InfoContainer>
           <TempContainer>
-            <Temp>{}</Temp>
-            <City>{}</City>
+            <Temp>{weather?.temp ?? "--"}°C</Temp>
+            <City>{weather?.city ?? "—"}</City>
           </TempContainer>
 
           <Weather>
-            {/* {Array.from({ length: 3 }).map((_, index) => (
-              <img key={index} src={weather.icon} alt="weather icon" />
-            ))} */}
+            {weather?.weather?.length
+              ? weather.weather.map(item => (
+                  <img
+                    key={v4()}
+                    src={`https://openweathermap.org/img/wn/${item.icon}@2x.png`}
+                    alt={item.description}
+                  />
+                ))
+              : null}
           </Weather>
         </InfoContainer>
 
@@ -115,7 +121,7 @@ function HomePage() {
           ></Button>
         </ButtonsContainer>
 
-       <APIError>
+        <APIError>
           <RedText>API Error</RedText>
           <WhiteText>Something went wrong with API data</WhiteText>
           <Button
@@ -123,7 +129,12 @@ function HomePage() {
             variant="delete" // ← визуально как delete
             isDisabled={!hasApiError}
           ></Button>
-        </APIError> 
+        </APIError>
+
+<Spiner>
+  <img src="../assets/Loading_2.gif"/>
+</Spiner>
+
       </ResultDiv>
     </HomePageContainer>
   )

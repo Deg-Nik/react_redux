@@ -111,3 +111,5 @@ font-size: 18px;
 font-weight: 400;
 color: white;
 `;
+
+export const Spiner = styled.div``;

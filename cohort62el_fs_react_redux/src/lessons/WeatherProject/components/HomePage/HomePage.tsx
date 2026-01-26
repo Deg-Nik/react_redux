@@ -105,7 +105,7 @@ function HomePage() {
         <ResultDiv>
           <InfoContainer>
             <TempContainer>
-              <Temp>{Math.round(weatherData?.temp)}°C</Temp>
+              <Temp>{Math.round(weatherData?.temp)}°</Temp>
               <City>{weatherData?.city}</City>
             </TempContainer>
 

@@ -40,25 +40,23 @@ export const weatherSlice = createAppSlice({
     },
 
     startLoading: state => {
-      state.isLoading = true
+      state.isLoading = true;
     },
 
     finishLoading: state => {
       state.isLoading = false
     },
+setError: (state, action: PayloadAction<boolean>) => {
+  state.error = action.payload
+},
 
-    setError: (state, action) => {
-      state.error = action.payload
-    },
-    clearError: state => {
-      state.error = ""
-    },
+
   },
   selectors: {
     weatherData: (state: WeatherInitialState) => state.weatherData,
     currentWeather: (state: WeatherInitialState) => state.currentWeather,
-    error: (state: WeatherInitialState) => state.error,
-    isLoading: state => state.isLoading,
+    hasError: (state: WeatherInitialState) => state.error,
+    isLoading: (state) => state.isLoading,
   },
 })
 

@@ -26,6 +26,7 @@ export const InputsContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 14px;
+  
 `
 
 export const ImgSpinner = styled.img`
@@ -113,8 +114,16 @@ export const RedText = styled.p`
 `
 
 export const WhiteText = styled.p`
-  margin-bottom: 10px;
-  font-size: 18px;
-  font-weight: 400;
-  color: white;
-`
+margin-bottom: 10px;
+font-size: 18px;
+font-weight: 400;
+color: white;
+`;
+
+export const LoadingText = styled.p`
+font-size: 57px;
+font-weight: bold;
+color: white;
+`;
+
+export const Spiner = styled.div``;

@@ -16,6 +16,7 @@ import {
   ImgSpinner,
   InfoContainer,
   InputsContainer,
+  LoadingText,
   RedText,
   ResultDiv,
   Temp,
@@ -41,8 +42,11 @@ const validationShema = Yup.object().shape({
 function HomePage() {
   const dispatch = useAppDispatch()
   const weatherData = useAppSelector(weatherSliceSelectors.currentWeather)
-  const error = useAppSelector(weatherSliceSelectors.error)
+  const hasApiError = useAppSelector(weatherSliceSelectors.hasError)
   const isLoading = useAppSelector(weatherSliceSelectors.isLoading)
+
+const showResult = Boolean(weatherData || hasApiError || isLoading)
+
 
   const API_KEY = "f09be79d24a66e5c14c0f50d0b27fe28"
 
@@ -69,16 +73,16 @@ function HomePage() {
     },
 
     validateOnChange: false,
+
+
     // Это функция, которая срабатывает при отправке формы
     onSubmit: async values => {
+      const city = values[HOME_FORM_VALUES.CITY]
+      dispatch(weatherSliceAction.clearCurrentWeather())
+      dispatch(weatherSliceAction.startLoading())
+      dispatch(weatherSliceAction.setError(false))
       try {
-        await validationShema.validate(values)
-
-        const city = values[HOME_FORM_VALUES.CITY]
-
-        dispatch(weatherSliceAction.clearCurrentWeather())
-        dispatch(weatherSliceAction.startLoading())
-
+        await new Promise(resolve => setTimeout(resolve, 3000))
         const response = await axios.get(
           `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`,
         )
@@ -91,22 +95,12 @@ function HomePage() {
           weather: data.weather,
           icon: data.weather[0].icon,
         }
-
-        dispatch(weatherSliceAction.weatherCard(newCity))
-      } catch (err: any) {
-        if (err.name === "ValidationError") {
-          alert(err.message)
-          return
-        }
-
-        const message =
-          err?.response?.data?.message ||
-          err?.response?.data?.error ||
-          err?.message ||
-          "Unknown API error"
-
-        dispatch(weatherSliceAction.setError(message))
-      } finally {
+        dispatch(weatherSliceAction.weatherCard(newCity)) // передаем данные введенные пользователем с values
+         dispatch(weatherSliceAction.setError(false))
+      } catch (error) {
+        dispatch(weatherSliceAction.setError(true))
+        console.error(error)
+      } finally{
         dispatch(weatherSliceAction.finishLoading())
       }
     },
@@ -124,69 +118,68 @@ function HomePage() {
             error={formik.errors[HOME_FORM_VALUES.CITY]}
           />
         </InputsContainer>
-        <Button name="Search" type="submit" isDisabled={isLoading} />
+        <Button name="Search" type="submit" isDisabled={isLoading}/>
       </HomeFormContainer>
-      {isLoading && (
-        <ResultDiv>
-          <InfoContainer>
-            <ImgSpinner src="/Loading_2.gif" alt="loading...." />
-          </InfoContainer>
-        </ResultDiv>
-      )}
-      {weatherData && (
-        <ResultDiv>
-          <InfoContainer>
-            <TempContainer>
-              <Temp>{Math.round(weatherData?.temp)}°</Temp>
-              <City>{weatherData?.city}</City>
-            </TempContainer>
 
-            <Weather>
-              <Img
-                src={`http://openweathermap.org/img/w/${weatherData.weather[0].icon}.png`}
-                alt="weather icon"
-              />
-              <Img
-                src={`http://openweathermap.org/img/w/${weatherData.weather[0].icon}.png`}
-                alt="weather icon"
-              />
-              <Img
-                src={`http://openweathermap.org/img/w/${weatherData.weather[0].icon}.png`}
-                alt="weather icon"
-              />
-            </Weather>
-          </InfoContainer>
+{showResult && (
+  <ResultDiv>
 
-          {weatherData &&  (
-            <ButtonsContainer>
-              <Button
-                name="Save"
-                variant="delete" // ← визуально как delete
-                isDisabled={!weatherData}
-                onClick={Save}
-              ></Button>
-              <Button
-                name="Delete"
-                variant="delete" // ← визуально как delete
-                isDisabled={!weatherData}
-                onClick={Delete}
-              ></Button>
-            </ButtonsContainer>
-          )}
+    {isLoading && <LoadingText>Loading...</LoadingText>}
 
-          {error && (
-            <APIError>
-              <RedText>API Error</RedText>
-              <WhiteText>{error}</WhiteText>
-              <Button
-                name="Delete"
-                variant="delete" // ← визуально как delete
-                isDisabled={!error}
-              ></Button>
-            </APIError>
-          )}
-        </ResultDiv>
-      )}
+    {hasApiError && !isLoading && (
+      <APIError>
+        <RedText>API Error</RedText>
+        <WhiteText>Something went wrong with API data</WhiteText>
+        <Button
+          name="Delete"
+          variant="delete"
+          isDisabled={!hasApiError}
+        />
+      </APIError>
+    )}
+
+    {weatherData && !hasApiError && !isLoading && (
+      <>
+        <InfoContainer>
+          <TempContainer>
+            <Temp>{Math.round(weatherData.temp)}°</Temp>
+            <City>{weatherData.city}</City>
+          </TempContainer>
+
+          <Weather>
+            <Img
+              src={`https://openweathermap.org/img/wn/${weatherData.icon}@2x.png`}
+              alt="weather icon"
+            />
+            <Img
+              src={`https://openweathermap.org/img/wn/${weatherData.icon}@2x.png`}
+              alt="weather icon"
+            />
+            <Img
+              src={`https://openweathermap.org/img/wn/${weatherData.icon}@2x.png`}
+              alt="weather icon"
+            />
+          </Weather>
+        </InfoContainer>
+
+        <ButtonsContainer>
+          <Button
+            name="Save"
+            variant="delete"
+            onClick={Save}
+          />
+          <Button
+            name="Delete"
+            variant="delete"
+            onClick={Delete}
+          />
+        </ButtonsContainer>
+      </>
+    )}
+
+  </ResultDiv>
+)}
+
     </HomePageContainer>
   )
 }

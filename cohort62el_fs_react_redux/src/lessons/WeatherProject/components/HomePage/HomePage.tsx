@@ -100,7 +100,15 @@ function HomePage() {
           alert(error.message)
           return
         }
-        dispatch(weatherSliceAction.setError(true))
+
+        const message =
+          error?.response?.data?.message ||
+          error?.response?.data?.error ||
+          error?.message ||
+          "Unknown API error"
+        dispatch(weatherSliceAction.setError(message))
+        
+
         // console.error(error)
       } finally {
         dispatch(weatherSliceAction.finishLoading())
@@ -134,7 +142,7 @@ function HomePage() {
           {hasApiError && !isLoading && (
             <APIError>
               <RedText>API Error</RedText>
-              <WhiteText>Something went wrong with API data</WhiteText>
+              <WhiteText>{hasApiError}</WhiteText>
               <Button
                 name="Delete"
                 variant="delete"

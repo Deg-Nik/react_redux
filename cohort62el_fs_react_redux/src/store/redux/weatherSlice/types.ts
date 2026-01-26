@@ -2,7 +2,7 @@ import { WeatherData } from "lessons/WeatherProject/types";
 
 export interface WeatherInitialState {
   isLoading: any;
-  error: boolean,
+  error: undefined,
   currentWeather?: WeatherData,
   weatherData: WeatherData [],
 }

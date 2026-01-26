@@ -43,15 +43,15 @@ function WeathersPage() {
 
             <Weather>
               <Img
-                src={`https://openweathermap.org/img/wn/${item.icon}@2x.png`}
+                src={`http://openweathermap.org/img/w/${item.weather[0].icon}.png`}
                 alt="weather icon"
               />
               <Img
-                src={`https://openweathermap.org/img/wn/${item.icon}@2x.png`}
+                src={`http://openweathermap.org/img/w/${item.weather[0].icon}.png`}
                 alt="weather icon"
               />
               <Img
-                src={`https://openweathermap.org/img/wn/${item.icon}@2x.png`}
+                src={`http://openweathermap.org/img/w/${item.weather[0].icon}.png`}
                 alt="weather icon"
               />
             </Weather>

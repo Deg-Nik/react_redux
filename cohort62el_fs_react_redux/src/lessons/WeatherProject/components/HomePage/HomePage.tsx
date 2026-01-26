@@ -13,6 +13,7 @@ import {
   HomeFormContainer,
   HomePageContainer,
   Img,
+  ImgSpinner,
   InfoContainer,
   InputsContainer,
   LoadingText,
@@ -56,21 +57,21 @@ const showResult = Boolean(weatherData || hasApiError || isLoading)
   }
 
   const Save = () => {
-  if (!weatherData) return
+    if (!weatherData) return
 
-  dispatch(weatherSliceAction.saveCard(weatherData))
-  dispatch(weatherSliceAction.clearCurrentWeather())
-  // удаление карты перед alert с помощью setTimeout. (обновление DOM далее alert)
-  setTimeout(() => {
-    alert("Sity saved")
-  }, 0)
-}
+    dispatch(weatherSliceAction.saveCard(weatherData))
+    dispatch(weatherSliceAction.clearCurrentWeather())
+    // удаление карты перед alert с помощью setTimeout. (обновление DOM далее alert)
+    setTimeout(() => {
+      alert("Sity saved")
+    }, 0)
+  }
 
   const formik = useFormik({
     initialValues: {
       [HOME_FORM_VALUES.CITY]: "",
     },
-    validationSchema: validationShema,
+
     validateOnChange: false,
 
 
@@ -85,11 +86,11 @@ const showResult = Boolean(weatherData || hasApiError || isLoading)
         const response = await axios.get(
           `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`,
         )
-        
+
         const data = response.data
         const newCity: WeatherData = {
           id: v4(),
-          city: city,
+          city,
           temp: data.main.temp,
           weather: data.weather,
           icon: data.weather[0].icon,

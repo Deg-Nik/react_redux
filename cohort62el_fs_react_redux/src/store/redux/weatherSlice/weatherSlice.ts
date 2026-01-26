@@ -4,7 +4,7 @@ import { PayloadAction } from "@reduxjs/toolkit"
 import { WeatherData } from "lessons/WeatherProject/types"
 
 const weatherInitialState: WeatherInitialState = {
-  error: false,
+  error: "",
   currentWeather: undefined,
   weatherData: [],
   isLoading: false,

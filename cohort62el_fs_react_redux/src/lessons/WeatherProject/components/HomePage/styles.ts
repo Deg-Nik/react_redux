@@ -29,6 +29,12 @@ export const InputsContainer = styled.div`
   
 `
 
+export const ImgSpinner = styled.img`
+  width: 250px;
+  height: 200px;
+  border-radius: 100%;
+`
+
 export const ResultDiv = styled.div`
   display: flex;
   gap: 40px;
@@ -50,7 +56,6 @@ export const InfoContainer = styled.div`
 export const TempContainer = styled.div`
   width: 85px;
   height: 70px;
-  
 `
 
 export const Temp = styled.p`
@@ -71,9 +76,7 @@ export const Weather = styled.div`
   height: 74px;
 `
 
-export const Img = styled.img`
-
-`;
+export const Img = styled.img``
 
 export const ButtonsContainer = styled.div`
   display: flex;
@@ -88,9 +91,7 @@ export const Button = styled.button`
   width: 146px;
 `
 
-export const ErrorContainer = styled.div`
-
-`;
+export const ErrorContainer = styled.div``
 
 export const APIError = styled.div`
   display: flex;
@@ -106,11 +107,11 @@ export const APIError = styled.div`
 `
 
 export const RedText = styled.p`
-margin-top: 10px;
-font-size: 57px;
-font-weight: 500;
-color: red;
-`;
+  margin-top: 10px;
+  font-size: 57px;
+  font-weight: 500;
+  color: red;
+`
 
 export const WhiteText = styled.p`
 margin-bottom: 10px;

@@ -66,7 +66,7 @@ function WeathersPage() {
         </ResultDiv>
       ))}
       {savedWeathers.length > 1 && (
-        <Button name="Delete All Weathers" onClick={handleDeleteAll} />
+        <Button name="Delete All Weathers" onClick={handleDeleteAll} $fullWidth />
       )}
     </CardsWrapper>
   )

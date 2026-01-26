@@ -4,6 +4,7 @@ import styled from "@emotion/styled"
 interface ButtonComponentProps {
   $isRed: boolean
   $variant: "default" | "delete" // ← ДОБАВЛЕНО
+  $fullWidth?: boolean
 }
 
 //  2. variant реально используется (delete ≠ red)
@@ -64,6 +65,9 @@ export const ButtonComponent = styled.button<ButtonComponentProps>`
   padding: 0;
   height: 48px;
   width: 146px;
+
+  width: ${({ $fullWidth }) => ($fullWidth ? "100%" : "146px")};
+
 
   /*  5. background теперь корректный */
   background-color: ${({ $isRed, $variant, disabled }) =>

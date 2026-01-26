@@ -1,26 +1,5 @@
 import styled from "@emotion/styled"
 
-export const PageWrapper = styled.div`
-  padding: 20px;
-`
-export const Title = styled.h1`
-  margin-bottom: 20px;
-`
-
-export const Nav = styled.nav`
-  margin-bottom: 20px;
-`
-
-export const NavLink = styled.span<{ active?: boolean }>`
-  margin-right: 15px;
-  cursor: pointer;
-  font-weight: ${active => (active ? "bold" : "normal")};
-  text-decoration: ${({ active }) => (active ? "underline" : "none")};
-`
-
-export const DeleteAllButton = styled.button`
-  margin-top: 20px;
-`
 
 export const CardsWrapper = styled.div`
   display: flex;

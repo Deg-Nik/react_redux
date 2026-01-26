@@ -1,5 +1,6 @@
 import { useFormik } from "formik"
 import * as Yup from "yup"
+import axios from "axios"
 
 import Button from "lessons/WeatherProject/input_button/Button/Button"
 import Input from "lessons/WeatherProject/input_button/Input/Input"
@@ -11,8 +12,10 @@ import {
   City,
   HomeFormContainer,
   HomePageContainer,
+  Img,
   InfoContainer,
   InputsContainer,
+  LoadingText,
   RedText,
   ResultDiv,
   Temp,
@@ -21,7 +24,10 @@ import {
   WhiteText,
 } from "./styles"
 import { useAppDispatch, useAppSelector } from "store/hooks"
-import { weatherSliceAction } from "store/redux/weatherSlice/weatherSlice"
+import {
+  weatherSliceAction,
+  weatherSliceSelectors,
+} from "store/redux/weatherSlice/weatherSlice"
 import { WeatherData } from "lessons/WeatherProject/types"
 import { v4 } from "uuid"
 
@@ -34,9 +40,31 @@ const validationShema = Yup.object().shape({
 
 function HomePage() {
   const dispatch = useAppDispatch()
+  const weatherData = useAppSelector(weatherSliceSelectors.currentWeather)
+  const hasApiError = useAppSelector(weatherSliceSelectors.hasError)
+  const isLoading = useAppSelector(weatherSliceSelectors.isLoading)
+
+const showResult = Boolean(weatherData || hasApiError || isLoading)
+
+
   const API_KEY = "f09be79d24a66e5c14c0f50d0b27fe28"
 
-  const hasApiError = true // при подключении redux true нужно заменить на const hasApiError = useAppSelector(state => state.weather.hasError);
+  const Delete = () => {
+    if (!weatherData) return
+    dispatch(weatherSliceAction.deleteCard(weatherData?.id))
+    dispatch(weatherSliceAction.clearCurrentWeather())
+  }
+
+  const Save = () => {
+  if (!weatherData) return
+
+  dispatch(weatherSliceAction.saveCard(weatherData))
+  dispatch(weatherSliceAction.clearCurrentWeather())
+  // удаление карты перед alert с помощью setTimeout. (обновление DOM далее alert)
+  setTimeout(() => {
+    alert("Sity saved")
+  }, 0)
+}
 
   const formik = useFormik({
     initialValues: {
@@ -44,33 +72,38 @@ function HomePage() {
     },
     validationSchema: validationShema,
     validateOnChange: false,
+
+
     // Это функция, которая срабатывает при отправке формы
     onSubmit: async values => {
       const city = values[HOME_FORM_VALUES.CITY]
+      dispatch(weatherSliceAction.clearCurrentWeather())
+      dispatch(weatherSliceAction.startLoading())
+      dispatch(weatherSliceAction.setError(false))
       try {
-        const response = await fetch(
+        await new Promise(resolve => setTimeout(resolve, 3000))
+        const response = await axios.get(
           `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`,
         )
-        if (!response.ok) {
-          throw new Error("API error")
-        }
-        const data = await response.json()
-        console.log(data)
+        
+        const data = response.data
         const newCity: WeatherData = {
           id: v4(),
           city: city,
           temp: data.main.temp,
           weather: data.weather,
+          icon: data.weather[0].icon,
         }
         dispatch(weatherSliceAction.weatherCard(newCity)) // передаем данные введенные пользователем с values
+         dispatch(weatherSliceAction.setError(false))
       } catch (error) {
+        dispatch(weatherSliceAction.setError(true))
         console.error(error)
+      } finally{
+        dispatch(weatherSliceAction.finishLoading())
       }
     },
   })
-
-  const weather = useAppSelector(state => state.WEATHER_CARD.currentWeather)
-
   return (
     <HomePageContainer>
       <HomeFormContainer onSubmit={formik.handleSubmit}>
@@ -84,58 +117,68 @@ function HomePage() {
             error={formik.errors[HOME_FORM_VALUES.CITY]}
           />
         </InputsContainer>
-        <Button name="Search" type="submit" />
+        <Button name="Search" type="submit" isDisabled={isLoading}/>
       </HomeFormContainer>
 
-      <ResultDiv>
+{showResult && (
+  <ResultDiv>
+
+    {isLoading && <LoadingText>Loading...</LoadingText>}
+
+    {hasApiError && !isLoading && (
+      <APIError>
+        <RedText>API Error</RedText>
+        <WhiteText>Something went wrong with API data</WhiteText>
+        <Button
+          name="Delete"
+          variant="delete"
+          isDisabled={!hasApiError}
+        />
+      </APIError>
+    )}
+
+    {weatherData && !hasApiError && !isLoading && (
+      <>
         <InfoContainer>
           <TempContainer>
-            <Temp>{weather?.temp ?? "--"}°C</Temp>
-            <City>{weather?.city ?? "—"}</City>
+            <Temp>{Math.round(weatherData.temp)}°</Temp>
+            <City>{weatherData.city}</City>
           </TempContainer>
 
           <Weather>
-            {weather?.weather?.length
-              ? weather.weather.map(item => (
-                  <img
-                    key={v4()}
-                    src={`https://openweathermap.org/img/wn/${item.icon}@2x.png`}
-                    alt={item.description}
-                  />
-                ))
-              : null}
+            <Img
+              src={`https://openweathermap.org/img/wn/${weatherData.icon}@2x.png`}
+              alt="weather icon"
+            />
+            <Img
+              src={`https://openweathermap.org/img/wn/${weatherData.icon}@2x.png`}
+              alt="weather icon"
+            />
+            <Img
+              src={`https://openweathermap.org/img/wn/${weatherData.icon}@2x.png`}
+              alt="weather icon"
+            />
           </Weather>
         </InfoContainer>
 
         <ButtonsContainer>
           <Button
             name="Save"
-            type="submit"
-            variant="delete" // ← визуально как delete
-            isDisabled={!formik.isValid || formik.isSubmitting}
-          ></Button>
+            variant="delete"
+            onClick={Save}
+          />
           <Button
             name="Delete"
-            variant="delete" // ← визуально как delete
-            isDisabled={!hasApiError}
-          ></Button>
+            variant="delete"
+            onClick={Delete}
+          />
         </ButtonsContainer>
+      </>
+    )}
 
-        <APIError>
-          <RedText>API Error</RedText>
-          <WhiteText>Something went wrong with API data</WhiteText>
-          <Button
-            name="Delete"
-            variant="delete" // ← визуально как delete
-            isDisabled={!hasApiError}
-          ></Button>
-        </APIError>
+  </ResultDiv>
+)}
 
-<Spiner>
-  <img src="../assets/Loading_2.gif"/>
-</Spiner>
-
-      </ResultDiv>
     </HomePageContainer>
   )
 }

@@ -4,38 +4,59 @@ import { PayloadAction } from "@reduxjs/toolkit"
 import { WeatherData } from "lessons/WeatherProject/types"
 
 const weatherInitialState: WeatherInitialState = {
-  error: undefined,
+  error: false,
   currentWeather: undefined,
   weatherData: [],
+  isLoading: false,
 }
-
 
 export const weatherSlice = createAppSlice({
   name: "WEATHER_CARD",
   initialState: weatherInitialState,
   reducers: {
-  weatherCard: (
-    state: WeatherInitialState,
-    action: PayloadAction<WeatherData>
-  ) => {
-    state.weatherData.push(action.payload)
-  },
+    weatherCard: (state, action: PayloadAction<WeatherData>) => {
+      state.currentWeather = action.payload
+    },
 
-  deleteCard: (
-    state: WeatherInitialState,
-    action: PayloadAction<string>
-  ) => {
-    state.weatherData = state.weatherData.filter(
-      data => data.id !== action.payload
-    )
-  },
+    saveCard: (state, action: PayloadAction<WeatherData>) => {
+      state.weatherData.push(action.payload)
+    },
 
-  deleteAllCards: (state: WeatherInitialState) => {
-    state.weatherData = []
-  },
+    deleteCard: (
+      state: WeatherInitialState,
+      action: PayloadAction<string | undefined>,
+    ) => {
+      state.weatherData = state.weatherData.filter(
+        data => data.id !== action.payload,
+      )
+    },
+
+    clearCurrentWeather: state => {
+      state.currentWeather = undefined
+    },
+
+    deleteAllCards: (state: WeatherInitialState) => {
+      state.weatherData = []
+    },
+
+    startLoading: state => {
+      state.isLoading = true;
+    },
+
+    finishLoading: state => {
+      state.isLoading = false
+    },
+setError: (state, action: PayloadAction<boolean>) => {
+  state.error = action.payload
 },
+
+
+  },
   selectors: {
     weatherData: (state: WeatherInitialState) => state.weatherData,
+    currentWeather: (state: WeatherInitialState) => state.currentWeather,
+    hasError: (state: WeatherInitialState) => state.error,
+    isLoading: (state) => state.isLoading,
   },
 })
 

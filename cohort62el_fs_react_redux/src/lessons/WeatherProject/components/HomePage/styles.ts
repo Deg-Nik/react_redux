@@ -66,9 +66,14 @@ export const City = styled.p`
 
 export const Weather = styled.div`
   display: flex;
+  justify-content: flex-end;
   width: 290px;
   height: 74px;
 `
+
+export const Img = styled.img`
+
+`;
 
 export const ButtonsContainer = styled.div`
   display: flex;
@@ -80,7 +85,9 @@ export const ButtonsContainer = styled.div`
 
 export const Button = styled.button`
   background-color: none;
+  width: 146px;
 `
+
 export const ErrorContainer = styled.div`
 
 `;
@@ -109,6 +116,12 @@ export const WhiteText = styled.p`
 margin-bottom: 10px;
 font-size: 18px;
 font-weight: 400;
+color: white;
+`;
+
+export const LoadingText = styled.p`
+font-size: 57px;
+font-weight: bold;
 color: white;
 `;
 

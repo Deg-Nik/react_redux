@@ -1,22 +1,25 @@
-import { PageWrapper } from "lessons/WeatherProject/Home/styles"
 import { useAppDispatch, useAppSelector } from "store/hooks"
-import { weatherSliceAction, weatherSliceSelectors } from "store/redux/weatherSlice/weatherSlice"
 import {
-  Card,
+  weatherSliceAction,
+  weatherSliceSelectors,
+} from "store/redux/weatherSlice/weatherSlice"
+import {
+  ButtonContainer,
   CardsWrapper,
-  DeleteAllButton,
-  DeleteButton,
-  Nav,
-  NavLink,
-  Title,
+  City,
+  Img,
+  InfoContainer,
+  ResultDiv,
+  Temp,
+  TempContainer,
+  Weather,
 } from "./styles"
-
+import Button from "lessons/WeatherProject/input_button/Button/Button"
+import { WeatherData } from "lessons/WeatherProject/types"
 
 function WeathersPage() {
   const dispatch = useAppDispatch()
-  const savedWeathers = useAppSelector(
-    weatherSliceSelectors.weatherData,
-  )
+  const savedWeathers = useAppSelector(weatherSliceSelectors.weatherData)
 
   const handleDelete = (id: string) => {
     dispatch(weatherSliceAction.deleteCard(id))
@@ -29,30 +32,43 @@ function WeathersPage() {
   }
 
   return (
-    <PageWrapper>
-      <Title>Weather app</Title>
-      <Nav>
-        <NavLink>Home</NavLink>
-        <NavLink>Weathers</NavLink>
-      </Nav>
-      <CardsWrapper>
-        {savedWeathers.map(item => (
-          <Card key={item.id}>
-            <h3>{item.city}</h3>
-            <p>Temperature: {item.temp}°C</p>
+    <CardsWrapper>
+      {savedWeathers.map((item: WeatherData) => (
+        <ResultDiv key={item.id}>
+          <InfoContainer>
+            <TempContainer>
+              <Temp>{Math.round(item.temp)}°</Temp>
+              <City>{item.city}</City>
+            </TempContainer>
 
-            <DeleteButton onClick={() => handleDelete(item.id)}>
-              Delete
-            </DeleteButton>
-          </Card>
-        ))}
-      </CardsWrapper>
-      {savedWeathers.length > 0 && (
-        <DeleteAllButton onClick={handleDeleteAll}>
-          Delete All Weathers
-        </DeleteAllButton>
+            <Weather>
+              <Img
+                src={`https://openweathermap.org/img/wn/${item.icon}@2x.png`}
+                alt="weather icon"
+              />
+              <Img
+                src={`https://openweathermap.org/img/wn/${item.icon}@2x.png`}
+                alt="weather icon"
+              />
+              <Img
+                src={`https://openweathermap.org/img/wn/${item.icon}@2x.png`}
+                alt="weather icon"
+              />
+            </Weather>
+          </InfoContainer>
+          <ButtonContainer>
+            <Button
+              name="Delete"
+              variant="delete"
+              onClick={() => handleDelete(item.id)}
+            />
+          </ButtonContainer>
+        </ResultDiv>
+      ))}
+      {savedWeathers.length > 1 && (
+        <Button name="Delete All Weathers" onClick={handleDeleteAll} $fullWidth />
       )}
-    </PageWrapper>
+    </CardsWrapper>
   )
 }
 

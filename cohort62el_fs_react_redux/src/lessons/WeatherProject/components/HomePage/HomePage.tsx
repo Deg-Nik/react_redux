@@ -51,11 +51,15 @@ function HomePage() {
   }
 
   const Save = () => {
-    if (!weatherData) return
-    dispatch(weatherSliceAction.saveCard(weatherData))
-    dispatch(weatherSliceAction.clearCurrentWeather())
+  if (!weatherData) return
+
+  dispatch(weatherSliceAction.saveCard(weatherData))
+  dispatch(weatherSliceAction.clearCurrentWeather())
+  // удаление карты перед alert с помощью setTimeout. (обновление DOM далее alert)
+  setTimeout(() => {
     alert("Sity saved")
-  }
+  }, 0)
+}
 
   const formik = useFormik({
     initialValues: {

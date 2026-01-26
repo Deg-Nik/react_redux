@@ -64,6 +64,10 @@ export const Icons = styled.div`
   height: 74px;
 `
 
+export const Img = styled.img`
+
+`;
+
 export const DeleteButton = styled.button`
   padding: 8px 20px;
   border-radius: 20px;

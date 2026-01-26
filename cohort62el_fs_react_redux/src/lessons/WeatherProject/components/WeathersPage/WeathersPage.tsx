@@ -7,6 +7,7 @@ import {
   DeleteAllButton,
   DeleteButton,
   Icons,
+  Img,
   Left,
   Temp,
 } from "./styles"
@@ -39,15 +40,15 @@ function WeathersPage() {
             </Left>
 
             <Icons>
-              <img
+              <Img
                 src={`https://openweathermap.org/img/wn/${item.icon}@2x.png`}
                 alt="weather icon"
               />
-              <img
+              <Img
                 src={`https://openweathermap.org/img/wn/${item.icon}@2x.png`}
                 alt="weather icon"
               />
-              <img
+              <Img
                 src={`https://openweathermap.org/img/wn/${item.icon}@2x.png`}
                 alt="weather icon"
               />
@@ -58,7 +59,7 @@ function WeathersPage() {
             </DeleteButton>
           </Card>
         ))}
-        {savedWeathers.length > 2 && (
+        {savedWeathers.length > 1 && (
         <DeleteAllButton onClick={handleDeleteAll}>
           Delete All Weathers
         </DeleteAllButton>

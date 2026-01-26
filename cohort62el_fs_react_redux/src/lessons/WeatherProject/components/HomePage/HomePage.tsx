@@ -11,6 +11,7 @@ import {
   City,
   HomeFormContainer,
   HomePageContainer,
+  Img,
   InfoContainer,
   InputsContainer,
   RedText,
@@ -51,6 +52,8 @@ function HomePage() {
   const Save = () => {
     if (!weatherData) return
     dispatch(weatherSliceAction.saveCard(weatherData))
+    dispatch(weatherSliceAction.clearCurrentWeather())
+    alert("Sity saved")
   }
 
   const formik = useFormik({
@@ -108,15 +111,15 @@ function HomePage() {
             </TempContainer>
 
             <Weather>
-              <img
+              <Img
                 src={`https://openweathermap.org/img/wn/${weatherData.icon}@2x.png`}
                 alt="weather icon"
               />
-              <img
+              <Img
                 src={`https://openweathermap.org/img/wn/${weatherData.icon}@2x.png`}
                 alt="weather icon"
               />
-              <img
+              <Img
                 src={`https://openweathermap.org/img/wn/${weatherData.icon}@2x.png`}
                 alt="weather icon"
               />

@@ -70,6 +70,10 @@ export const Weather = styled.div`
   height: 74px;
 `
 
+export const Img = styled.img`
+
+`;
+
 export const ButtonsContainer = styled.div`
   display: flex;
   width: 100%;

@@ -27,6 +27,7 @@ import {
 } from "store/redux/weatherSlice/weatherSlice"
 import { WeatherData } from "lessons/WeatherProject/types"
 import { v4 } from "uuid"
+import { resolve } from "path"
 
 const validationShema = Yup.object().shape({
   [HOME_FORM_VALUES.CITY]: Yup.string()
@@ -39,6 +40,7 @@ function HomePage() {
   const dispatch = useAppDispatch()
   const weatherData = useAppSelector(weatherSliceSelectors.currentWeather)
   const hasApiError = useAppSelector(weatherSliceSelectors.hasError)
+  const isLoading = useAppSelector(weatherSliceSelectors.isLoading)
 
   const API_KEY = "f09be79d24a66e5c14c0f50d0b27fe28"
 
@@ -62,7 +64,9 @@ function HomePage() {
     // Это функция, которая срабатывает при отправке формы
     onSubmit: async values => {
       const city = values[HOME_FORM_VALUES.CITY]
+      dispatch(weatherSliceAction.startLoading())
       try {
+        await new Promise(resolve => setTimeout(resolve, 3000))
         const response = await fetch(
           `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`,
         )
@@ -80,6 +84,8 @@ function HomePage() {
         dispatch(weatherSliceAction.weatherCard(newCity)) // передаем данные введенные пользователем с values
       } catch (error) {
         console.error(error)
+      } finally{
+        dispatch(weatherSliceAction.finishLoading())
       }
     },
   })
@@ -96,11 +102,12 @@ function HomePage() {
             error={formik.errors[HOME_FORM_VALUES.CITY]}
           />
         </InputsContainer>
-        <Button name="Search" type="submit" />
+        <Button name="Search" type="submit" isDisabled={isLoading}/>
       </HomeFormContainer>
 
       {weatherData && (
         <ResultDiv>
+          {/* {isLoading && <WhiteText>Loading...</WhiteText>} */}
           <InfoContainer>
             <TempContainer>
               <Temp>{Math.round(weatherData?.temp)}°C</Temp>

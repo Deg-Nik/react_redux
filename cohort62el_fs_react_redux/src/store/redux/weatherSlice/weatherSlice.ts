@@ -7,6 +7,7 @@ const weatherInitialState: WeatherInitialState = {
   error: false,
   currentWeather: undefined,
   weatherData: [],
+  isLoading: false,
 }
 
 export const weatherSlice = createAppSlice({
@@ -38,11 +39,20 @@ export const weatherSlice = createAppSlice({
     deleteAllCards: (state: WeatherInitialState) => {
       state.weatherData = []
     },
+
+    startLoading: state => {
+      state.isLoading = true;
+    },
+
+    finishLoading: state => {
+      state.isLoading = false
+    },
   },
   selectors: {
     weatherData: (state: WeatherInitialState) => state.weatherData,
     currentWeather: (state: WeatherInitialState) => state.currentWeather,
     hasError: (state: WeatherInitialState) => state.error,
+    isLoading: (state) => state.isLoading,
   },
 })
 

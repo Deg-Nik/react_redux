@@ -1,27 +1,5 @@
-import styled from "@emotion/styled";
+import styled from "@emotion/styled"
 
-
-export const PageWrapper = styled.div`
-padding: 20px;
-`;
-export const Title = styled.h1`
-margin-bottom: 20px;
-`;
-
-export const Nav = styled.nav`
-margin-bottom: 20px;
-`;
-
-export const NavLink = styled.span<{active?: boolean}>`
-margin-right: 15px;
-cursor: pointer;
-font-weight: ${active => (active ? "bold" : "normal")};
-text-decoration: ${({ active }) => (active ? "underline" : "none")};
-`;
-
-export const DeleteAllButton = styled.button`
-margin-top: 20px;
-`;
 
 export const CardsWrapper = styled.div`
   display: flex;
@@ -30,60 +8,61 @@ export const CardsWrapper = styled.div`
   align-items: center;
 `
 
-export const Card = styled.div`
-  width: 520px;
-  padding: 24px 32px;
-  border-radius: 16px;
-
-  background: linear-gradient(
-    135deg,
-    rgba(30, 60, 114, 0.85),
-    rgba(42, 82, 152, 0.85)
-  );
-
-  backdrop-filter: blur(10px);
-  color: white;
-
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: 24px;
-`
-
-export const Left = styled.div`
+export const ResultDiv = styled.div`
   display: flex;
+  gap: 40px;
   flex-direction: column;
+  width: 709px;
+  height: 220px;
+  border: none;
+  border-radius: 16px;
+  background-color: rgba(47, 72, 111, 0.75);
+  transition: background-color 0.3s ease;
 `
-
-export const Temp = styled.div`
-  font-size: 48px;
-  font-weight: 700;
-`
-
-export const City = styled.div`
-  font-size: 16px;
-  opacity: 0.9;
-`
-
-export const Icons = styled.div`
+export const InfoContainer = styled.div`
   display: flex;
-  gap: 8px;
-
-  img {
-    width: 40px;
-    height: 40px;
-  }
+  gap: 20px;
+  padding: 20px;
+  justify-content: space-evenly;
 `
 
-export const DeleteButton = styled.button`
-  padding: 8px 20px;
-  border-radius: 20px;
-  border: 1px solid white;
-  background: transparent;
-  color: white;
-  cursor: pointer;
+export const TempContainer = styled.div`
+  width: 85px;
+  height: 70px;
+  
+`
 
-  &:hover {
-    background: rgba(255, 255, 255, 0.15);
-  }
+export const Temp = styled.p`
+  font-size: 57px;
+  color: white;
+`
+
+export const City = styled.p`
+  font-size: 20px;
+  color: white;
+  font-weight: bold;
+`
+
+export const Weather = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  width: 290px;
+  height: 74px;
+`
+
+export const Img = styled.img`
+
+`;
+
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  width: 100%;
+  height: 48px;
+  justify-content: center;
+  gap: 80px;
+`
+
+export const Button = styled.button`
+  background-color: none;
 `

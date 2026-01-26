@@ -16,7 +16,6 @@ export const weatherSlice = createAppSlice({
   reducers: {
     weatherCard: (state, action: PayloadAction<WeatherData>) => {
       state.currentWeather = action.payload
-      state.weatherData.push(action.payload)
     },
 
     saveCard: (state, action: PayloadAction<WeatherData>) => {

@@ -1,5 +1,6 @@
 import { useFormik } from "formik"
 import * as Yup from "yup"
+import axios from "axios"
 
 import Button from "lessons/WeatherProject/input_button/Button/Button"
 import Input from "lessons/WeatherProject/input_button/Input/Input"
@@ -11,6 +12,7 @@ import {
   City,
   HomeFormContainer,
   HomePageContainer,
+  Img,
   InfoContainer,
   InputsContainer,
   RedText,
@@ -51,9 +53,15 @@ function HomePage() {
   }
 
   const Save = () => {
-    if (!weatherData) return
-    dispatch(weatherSliceAction.saveCard(weatherData))
-  }
+  if (!weatherData) return
+
+  dispatch(weatherSliceAction.saveCard(weatherData))
+  dispatch(weatherSliceAction.clearCurrentWeather())
+  // удаление карты перед alert с помощью setTimeout. (обновление DOM далее alert)
+  setTimeout(() => {
+    alert("Sity saved")
+  }, 0)
+}
 
   const formik = useFormik({
     initialValues: {
@@ -67,13 +75,11 @@ function HomePage() {
       dispatch(weatherSliceAction.startLoading())
       try {
         await new Promise(resolve => setTimeout(resolve, 3000))
-        const response = await fetch(
+        const response = await axios.get(
           `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`,
         )
-        if (!response.ok) {
-          throw new Error("API error")
-        }
-        const data = await response.json()
+        
+        const data = response.data
         const newCity: WeatherData = {
           id: v4(),
           city: city,
@@ -110,20 +116,20 @@ function HomePage() {
           {/* {isLoading && <WhiteText>Loading...</WhiteText>} */}
           <InfoContainer>
             <TempContainer>
-              <Temp>{Math.round(weatherData?.temp)}°C</Temp>
+              <Temp>{Math.round(weatherData?.temp)}°</Temp>
               <City>{weatherData?.city}</City>
             </TempContainer>
 
             <Weather>
-              <img
+              <Img
                 src={`https://openweathermap.org/img/wn/${weatherData.icon}@2x.png`}
                 alt="weather icon"
               />
-              <img
+              <Img
                 src={`https://openweathermap.org/img/wn/${weatherData.icon}@2x.png`}
                 alt="weather icon"
               />
-              <img
+              <Img
                 src={`https://openweathermap.org/img/wn/${weatherData.icon}@2x.png`}
                 alt="weather icon"
               />

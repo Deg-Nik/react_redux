@@ -12,4 +12,5 @@ export interface ButtonProps {
   isRed?: boolean;
   variant?: ButtonVariant; // 🆕 для Delete в проекте Weather
   isDisabled?: boolean;
+  $fullWidth?: boolean;
 }

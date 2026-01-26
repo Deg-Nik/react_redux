@@ -29,13 +29,10 @@ export const CardsWrapper = styled.div`
   align-items: center;
 `
 
-export const Card = styled.div`
+export const ResultDiv = styled.div`
   display: flex;
-  gap: 10px;
-  padding-top: 20px;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  gap: 40px;
+  flex-direction: column;
   width: 709px;
   height: 220px;
   border: none;
@@ -43,24 +40,31 @@ export const Card = styled.div`
   background-color: rgba(47, 72, 111, 0.75);
   transition: background-color 0.3s ease;
 `
-
-export const Left = styled.div`
-  width: 85px;
-  height: 70px;
+export const InfoContainer = styled.div`
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  justify-content: space-evenly;
 `
 
-export const Temp = styled.div`
+export const TempContainer = styled.div`
+  width: 85px;
+  height: 70px;
+  
+`
+
+export const Temp = styled.p`
   font-size: 57px;
   color: white;
 `
 
-export const City = styled.div`
+export const City = styled.p`
   font-size: 20px;
   color: white;
   font-weight: bold;
 `
 
-export const Icons = styled.div`
+export const Weather = styled.div`
   display: flex;
   justify-content: flex-end;
   width: 290px;
@@ -71,11 +75,13 @@ export const Img = styled.img`
 
 `;
 
+
 export const ButtonContainer = styled.div`
   display: flex;
-  width: 146px;
+  width: 100%;
   height: 48px;
   justify-content: center;
+  gap: 80px;
 `
 
 export const Button = styled.button`

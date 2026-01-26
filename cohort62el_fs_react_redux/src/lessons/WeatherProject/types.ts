@@ -8,6 +8,8 @@ export interface WeatherData {
   id: string;
   city: string;
   temp: number;
-  weather: string[];
+  weather: {
+    icon: string
+  }[];
   icon: string;
 }

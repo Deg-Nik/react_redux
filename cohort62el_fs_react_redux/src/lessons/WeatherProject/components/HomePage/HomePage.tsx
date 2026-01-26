@@ -13,6 +13,7 @@ import {
   HomeFormContainer,
   HomePageContainer,
   Img,
+  ImgSpinner,
   InfoContainer,
   InputsContainer,
   RedText,
@@ -29,7 +30,6 @@ import {
 } from "store/redux/weatherSlice/weatherSlice"
 import { WeatherData } from "lessons/WeatherProject/types"
 import { v4 } from "uuid"
-
 
 const validationShema = Yup.object().shape({
   [HOME_FORM_VALUES.CITY]: Yup.string()
@@ -67,14 +67,18 @@ function HomePage() {
     initialValues: {
       [HOME_FORM_VALUES.CITY]: "",
     },
-    validationSchema: validationShema,
+
     validateOnChange: false,
     // Это функция, которая срабатывает при отправке формы
     onSubmit: async values => {
-      const city = values[HOME_FORM_VALUES.CITY]
-      dispatch(weatherSliceAction.clearCurrentWeather())
-      dispatch(weatherSliceAction.startLoading())
       try {
+        await validationShema.validate(values)
+
+        const city = values[HOME_FORM_VALUES.CITY]
+
+        dispatch(weatherSliceAction.clearCurrentWeather())
+        dispatch(weatherSliceAction.startLoading())
+
         const response = await axios.get(
           `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`,
         )
@@ -82,18 +86,25 @@ function HomePage() {
         const data = response.data
         const newCity: WeatherData = {
           id: v4(),
-          city: city,
+          city,
           temp: data.main.temp,
           weather: data.weather,
           icon: data.weather[0].icon,
         }
-        dispatch(weatherSliceAction.weatherCard(newCity)) // передаем данные введенные пользователем с values
-      } catch (error: any) {
-        const message = 
-        error?.response?.data?.message ||
-        error?.ressponse?.data?.error ||
-        error?.message ||
-        "Unknow API error"
+
+        dispatch(weatherSliceAction.weatherCard(newCity))
+      } catch (err: any) {
+        if (err.name === "ValidationError") {
+          alert(err.message)
+          return
+        }
+
+        const message =
+          err?.response?.data?.message ||
+          err?.response?.data?.error ||
+          err?.message ||
+          "Unknown API error"
+
         dispatch(weatherSliceAction.setError(message))
       } finally {
         dispatch(weatherSliceAction.finishLoading())
@@ -115,7 +126,13 @@ function HomePage() {
         </InputsContainer>
         <Button name="Search" type="submit" isDisabled={isLoading} />
       </HomeFormContainer>
-
+      {isLoading && (
+        <ResultDiv>
+          <InfoContainer>
+            <ImgSpinner src="/Loading_2.gif" alt="loading...." />
+          </InfoContainer>
+        </ResultDiv>
+      )}
       {weatherData && (
         <ResultDiv>
           <InfoContainer>
@@ -126,21 +143,21 @@ function HomePage() {
 
             <Weather>
               <Img
-                src={`https://openweathermap.org/img/wn/${weatherData.icon}@2x.png`}
+                src={`http://openweathermap.org/img/w/${weatherData.weather[0].icon}.png`}
                 alt="weather icon"
               />
               <Img
-                src={`https://openweathermap.org/img/wn/${weatherData.icon}@2x.png`}
+                src={`http://openweathermap.org/img/w/${weatherData.weather[0].icon}.png`}
                 alt="weather icon"
               />
               <Img
-                src={`https://openweathermap.org/img/wn/${weatherData.icon}@2x.png`}
+                src={`http://openweathermap.org/img/w/${weatherData.weather[0].icon}.png`}
                 alt="weather icon"
               />
             </Weather>
           </InfoContainer>
 
-          {weatherData && (
+          {weatherData &&  (
             <ButtonsContainer>
               <Button
                 name="Save"

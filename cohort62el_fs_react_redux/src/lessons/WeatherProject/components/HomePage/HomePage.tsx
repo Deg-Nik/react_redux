@@ -1,5 +1,6 @@
 import { useFormik } from "formik"
 import * as Yup from "yup"
+import axios from "axios"
 
 import Button from "lessons/WeatherProject/input_button/Button/Button"
 import Input from "lessons/WeatherProject/input_button/Input/Input"
@@ -66,13 +67,11 @@ function HomePage() {
     onSubmit: async values => {
       const city = values[HOME_FORM_VALUES.CITY]
       try {
-        const response = await fetch(
+        const response = await axios.get(
           `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`,
         )
-        if (!response.ok) {
-          throw new Error("API error")
-        }
-        const data = await response.json()
+        
+        const data = response.data
         const newCity: WeatherData = {
           id: v4(),
           city: city,

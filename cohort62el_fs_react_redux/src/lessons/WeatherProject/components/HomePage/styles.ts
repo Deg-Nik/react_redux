@@ -84,7 +84,9 @@ export const ButtonsContainer = styled.div`
 
 export const Button = styled.button`
   background-color: none;
+  width: 146px;
 `
+
 export const ErrorContainer = styled.div`
 
 `;

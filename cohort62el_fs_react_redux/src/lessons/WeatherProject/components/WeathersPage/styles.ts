@@ -31,8 +31,11 @@ export const CardsWrapper = styled.div`
 
 export const Card = styled.div`
   display: flex;
-  gap: 40px;
-  flex-direction: column;
+  gap: 10px;
+  padding-top: 20px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
   width: 709px;
   height: 220px;
   border: none;
@@ -68,15 +71,13 @@ export const Img = styled.img`
 
 `;
 
-export const DeleteButton = styled.button`
-  padding: 8px 20px;
-  border-radius: 20px;
-  border: 1px solid white;
-  background: transparent;
-  color: white;
-  cursor: pointer;
+export const ButtonContainer = styled.div`
+  display: flex;
+  width: 146px;
+  height: 48px;
+  justify-content: center;
+`
 
-  &:hover {
-    background: rgba(255, 255, 255, 0.15);
-  }
+export const Button = styled.button`
+  background-color: none;
 `

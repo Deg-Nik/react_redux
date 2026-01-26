@@ -29,7 +29,7 @@ import {
 } from "store/redux/weatherSlice/weatherSlice"
 import { WeatherData } from "lessons/WeatherProject/types"
 import { v4 } from "uuid"
-import { resolve } from "path"
+
 
 const validationShema = Yup.object().shape({
   [HOME_FORM_VALUES.CITY]: Yup.string()
@@ -41,7 +41,7 @@ const validationShema = Yup.object().shape({
 function HomePage() {
   const dispatch = useAppDispatch()
   const weatherData = useAppSelector(weatherSliceSelectors.currentWeather)
-  const hasApiError = useAppSelector(weatherSliceSelectors.hasError)
+  const error = useAppSelector(weatherSliceSelectors.error)
   const isLoading = useAppSelector(weatherSliceSelectors.isLoading)
 
   const API_KEY = "f09be79d24a66e5c14c0f50d0b27fe28"
@@ -53,15 +53,15 @@ function HomePage() {
   }
 
   const Save = () => {
-  if (!weatherData) return
+    if (!weatherData) return
 
-  dispatch(weatherSliceAction.saveCard(weatherData))
-  dispatch(weatherSliceAction.clearCurrentWeather())
-  // удаление карты перед alert с помощью setTimeout. (обновление DOM далее alert)
-  setTimeout(() => {
-    alert("Sity saved")
-  }, 0)
-}
+    dispatch(weatherSliceAction.saveCard(weatherData))
+    dispatch(weatherSliceAction.clearCurrentWeather())
+    // удаление карты перед alert с помощью setTimeout. (обновление DOM далее alert)
+    setTimeout(() => {
+      alert("Sity saved")
+    }, 0)
+  }
 
   const formik = useFormik({
     initialValues: {
@@ -72,13 +72,13 @@ function HomePage() {
     // Это функция, которая срабатывает при отправке формы
     onSubmit: async values => {
       const city = values[HOME_FORM_VALUES.CITY]
+      dispatch(weatherSliceAction.clearCurrentWeather())
       dispatch(weatherSliceAction.startLoading())
       try {
-        await new Promise(resolve => setTimeout(resolve, 3000))
         const response = await axios.get(
           `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`,
         )
-        
+
         const data = response.data
         const newCity: WeatherData = {
           id: v4(),
@@ -88,9 +88,14 @@ function HomePage() {
           icon: data.weather[0].icon,
         }
         dispatch(weatherSliceAction.weatherCard(newCity)) // передаем данные введенные пользователем с values
-      } catch (error) {
-        console.error(error)
-      } finally{
+      } catch (error: any) {
+        const message = 
+        error?.response?.data?.message ||
+        error?.ressponse?.data?.error ||
+        error?.message ||
+        "Unknow API error"
+        dispatch(weatherSliceAction.setError(message))
+      } finally {
         dispatch(weatherSliceAction.finishLoading())
       }
     },
@@ -108,12 +113,11 @@ function HomePage() {
             error={formik.errors[HOME_FORM_VALUES.CITY]}
           />
         </InputsContainer>
-        <Button name="Search" type="submit" isDisabled={isLoading}/>
+        <Button name="Search" type="submit" isDisabled={isLoading} />
       </HomeFormContainer>
 
       {weatherData && (
         <ResultDiv>
-          {/* {isLoading && <WhiteText>Loading...</WhiteText>} */}
           <InfoContainer>
             <TempContainer>
               <Temp>{Math.round(weatherData?.temp)}°</Temp>
@@ -153,14 +157,14 @@ function HomePage() {
             </ButtonsContainer>
           )}
 
-          {hasApiError && (
+          {error && (
             <APIError>
               <RedText>API Error</RedText>
-              <WhiteText>Something went wrong with API data</WhiteText>
+              <WhiteText>{error}</WhiteText>
               <Button
                 name="Delete"
                 variant="delete" // ← визуально как delete
-                isDisabled={!hasApiError}
+                isDisabled={!error}
               ></Button>
             </APIError>
           )}

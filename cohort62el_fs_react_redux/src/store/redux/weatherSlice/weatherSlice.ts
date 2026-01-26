@@ -4,7 +4,7 @@ import { PayloadAction } from "@reduxjs/toolkit"
 import { WeatherData } from "lessons/WeatherProject/types"
 
 const weatherInitialState: WeatherInitialState = {
-  error: false,
+  error: "",
   currentWeather: undefined,
   weatherData: [],
   isLoading: false,
@@ -40,18 +40,25 @@ export const weatherSlice = createAppSlice({
     },
 
     startLoading: state => {
-      state.isLoading = true;
+      state.isLoading = true
     },
 
     finishLoading: state => {
       state.isLoading = false
     },
+
+    setError: (state, action) => {
+      state.error = action.payload
+    },
+    clearError: state => {
+      state.error = ""
+    },
   },
   selectors: {
     weatherData: (state: WeatherInitialState) => state.weatherData,
     currentWeather: (state: WeatherInitialState) => state.currentWeather,
-    hasError: (state: WeatherInitialState) => state.error,
-    isLoading: (state) => state.isLoading,
+    error: (state: WeatherInitialState) => state.error,
+    isLoading: state => state.isLoading,
   },
 })
 

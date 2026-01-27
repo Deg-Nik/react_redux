@@ -18,6 +18,7 @@ import {
   InputsContainer,
   RedText,
   ResultDiv,
+  Sunrise,
   Temp,
   TempContainer,
   Weather,
@@ -61,9 +62,11 @@ function HomePage() {
     dispatch(weatherSliceAction.clearCurrentWeather())
     // удаление карты перед alert с помощью setTimeout. (обновление DOM далее alert)
     setTimeout(() => {
-      alert("Sity saved")
+      alert("City saved")
     }, 0)
   }
+
+  
 
   const formik = useFormik({
     initialValues: {
@@ -88,12 +91,24 @@ function HomePage() {
         const data = response.data
         const newCity: WeatherData = {
           id: v4(),
-          city,
+          city: city,
           temp: data.main.temp,
           weather: data.weather,
           icon: data.weather[0].icon,
+          details: {
+            feelsLike: data.main.feels_like,
+            tempMin: data.main.temp_min,
+            tempMax: data.main.temp_max,
+            pressure: data.main.pressure,
+            visibility: data.visibility,
+            windSpeed: data.wind.speed,
+            windDeg: data.wind.deg,
+            sunrise: data.sys.sunrise,
+            sunset: data.sys.sunset,
+            humidity: data.main.humidity,
+          },
         }
-        dispatch(weatherSliceAction.weatherCard(newCity)) 
+        dispatch(weatherSliceAction.weatherCard(newCity))
       } catch (error: any) {
         if (error.name === "ValidationError") {
           alert(error.message)
@@ -137,7 +152,7 @@ function HomePage() {
 
           {hasApiError && !isLoading && (
             <APIError>
-              <RedText>API Error</RedText>
+              <RedText>API Error:</RedText>
               <WhiteText>{hasApiError}</WhiteText>
               <Button
                 name="Delete"
@@ -148,7 +163,7 @@ function HomePage() {
                   dispatch(weatherSliceAction.clearCurrentWeather())
                   setTimeout(() => {
                     alert("Error cleared")
-                  },0)
+                  }, 0)
                 }}
               />
             </APIError>
@@ -176,7 +191,41 @@ function HomePage() {
                     alt="weather icon"
                   />
                 </Weather>
+
+                <Sunrise>
+                  <p>
+                    Sunrise:{" "}
+                    {new Date(
+                      weatherData.details.sunrise * 1000,
+                    ).toLocaleTimeString()}
+                  </p>
+                  <p>
+                    Sunset:{" "}
+                    {new Date(
+                      weatherData.details.sunset * 1000,
+                    ).toLocaleTimeString()}
+                  </p>
+                </Sunrise>
               </InfoContainer>
+
+              {weatherData.details && (
+                <InfoContainer>
+                  <WhiteText>
+                    Feels like: {Math.round(weatherData.details.feelsLike)}°C
+                  </WhiteText>
+                  <p>
+                    Min: {Math.round(weatherData.details.tempMin)}°C / Max:{" "}
+                    {Math.round(weatherData.details.tempMax)}°C
+                  </p>
+                  <p>Pressure: {weatherData.details.pressure} hPa</p>
+                  <p>Visibility: {weatherData.details.visibility / 1000} km</p>
+                  <p>
+                    Wind: {weatherData.details.windSpeed} m/s,{" "}
+                    {weatherData.details.windDeg}°
+                  </p>
+                  <p>Humidity: {weatherData.details.humidity}%</p>
+                </InfoContainer>
+              )}
 
               <ButtonsContainer>
                 <Button name="Save" variant="delete" onClick={Save} />

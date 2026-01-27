@@ -26,7 +26,6 @@ export const InputsContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 14px;
-  
 `
 
 export const ImgSpinner = styled.img`
@@ -37,16 +36,34 @@ export const ImgSpinner = styled.img`
 
 export const ResultDiv = styled.div`
   display: flex;
-  gap: 40px;
+  gap: 20px;
   flex-direction: column;
-  width: 709px;
-  height: 220px;
+  width: auto;
+  height: auto;
   border: none;
   border-radius: 16px;
   background-color: rgba(47, 72, 111, 0.75);
   transition: background-color 0.3s ease;
 `
+
+export const Sunrise = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+`
+
 export const InfoContainer = styled.div`
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  justify-content: space-evenly;
+  flex-direction: row;
+  color: white;
+  padding-left: 40px;
+`
+
+export const MoreContainer = styled.div`
   display: flex;
   gap: 20px;
   padding: 20px;
@@ -84,6 +101,7 @@ export const ButtonsContainer = styled.div`
   height: 48px;
   justify-content: center;
   gap: 80px;
+  margin-bottom: 20px;
 `
 
 export const Button = styled.button`
@@ -114,16 +132,16 @@ export const RedText = styled.p`
 `
 
 export const WhiteText = styled.p`
-margin-bottom: 10px;
-font-size: 18px;
-font-weight: 400;
-color: white;
-`;
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: 400;
+  color: white;
+`
 
 export const LoadingText = styled.p`
-font-size: 57px;
-font-weight: bold;
-color: white;
-`;
+  font-size: 57px;
+  font-weight: bold;
+  color: white;
+`
 
-export const Spiner = styled.div``;
+export const Spiner = styled.div``

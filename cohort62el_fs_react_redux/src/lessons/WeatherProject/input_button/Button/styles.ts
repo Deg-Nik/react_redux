@@ -25,7 +25,7 @@ const generateButtonColor = (
     return "#fc3333ff"
   }
 
-  return "#1f27f5"
+  return "#3678B4"
 }
 
 // ✅ 3. hover тоже учитывает variant
@@ -46,7 +46,7 @@ const generateButtonColorOnHover = (
     return "#ff6868ff"
   }
 
-  return "rgb(97, 102, 255)"
+  return "#5f90be"
 }
 
 export const ButtonComponent = styled.button<ButtonComponentProps>`

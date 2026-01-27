@@ -64,14 +64,13 @@ JSON format API response example
    ],
    "base": "stations",
    "main": {
-      "temp": 284.2,
+      
       "feels_like": 282.93,
       "temp_min": 283.06,
       "temp_max": 286.82,
       "pressure": 1021,
       "humidity": 60,
-      "sea_level": 1021,
-      "grnd_level": 910
+      
    },
    "visibility": 10000,
    "wind": {
@@ -79,6 +78,13 @@ JSON format API response example
       "deg": 121,
       "gust": 3.47
    },
+
+
+
+
+
+
+   
    "rain": {
       "1h": 2.73
    },

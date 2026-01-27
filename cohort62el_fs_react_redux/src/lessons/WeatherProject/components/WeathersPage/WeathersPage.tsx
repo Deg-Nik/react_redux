@@ -23,12 +23,16 @@ function WeathersPage() {
 
   const handleDelete = (id: string) => {
     dispatch(weatherSliceAction.deleteCard(id))
-    alert("Weather deleted")
+    setTimeout(() => {
+      alert("Card deleted")
+    }, 0)
   }
 
   const handleDeleteAll = () => {
     dispatch(weatherSliceAction.deleteAllCards())
-    alert("All weathers deleted")
+    setTimeout(() => {
+      alert("All cards deleted")
+    }, 0)
   }
 
   return (
@@ -65,8 +69,8 @@ function WeathersPage() {
           </ButtonContainer>
         </ResultDiv>
       ))}
-      {savedWeathers.length > 1 && (
-        <Button name="Delete All Weathers" onClick={handleDeleteAll} $fullWidth />
+      {savedWeathers.length > 0 && (
+        <Button name="Delete all Cards" onClick={handleDeleteAll} $fullWidth />
       )}
     </CardsWrapper>
   )

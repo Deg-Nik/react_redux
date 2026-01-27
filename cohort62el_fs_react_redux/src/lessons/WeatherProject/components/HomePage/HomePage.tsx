@@ -93,8 +93,7 @@ function HomePage() {
           weather: data.weather,
           icon: data.weather[0].icon,
         }
-        dispatch(weatherSliceAction.weatherCard(newCity)) // передаем данные введенные пользователем с values
-        //  dispatch(weatherSliceAction.setError(false))
+        dispatch(weatherSliceAction.weatherCard(newCity)) 
       } catch (error: any) {
         if (error.name === "ValidationError") {
           alert(error.message)
@@ -107,9 +106,6 @@ function HomePage() {
           error?.message ||
           "Unknown API error"
         dispatch(weatherSliceAction.setError(message))
-        
-
-        // console.error(error)
       } finally {
         dispatch(weatherSliceAction.finishLoading())
       }
@@ -150,6 +146,9 @@ function HomePage() {
                 onClick={() => {
                   dispatch(weatherSliceAction.setError(false))
                   dispatch(weatherSliceAction.clearCurrentWeather())
+                  setTimeout(() => {
+                    alert("Error cleared")
+                  },0)
                 }}
               />
             </APIError>

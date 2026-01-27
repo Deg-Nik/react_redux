@@ -20,7 +20,7 @@ function Layout({ children }: LayoutProps) {
             Home
           </HeaderLink>
           <HeaderLink style={getActiveStyles} to={ROUTES.WEATHERS}>
-            Weathers
+            Weather
           </HeaderLink>
         </NavigationContainer>
       </Header>

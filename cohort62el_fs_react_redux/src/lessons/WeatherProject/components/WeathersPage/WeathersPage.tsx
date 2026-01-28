@@ -3,18 +3,10 @@ import {
   weatherSliceAction,
   weatherSliceSelectors,
 } from "store/redux/weatherSlice/weatherSlice"
-import {
-  ButtonContainer,
-  CardsWrapper,
-  City,
-  Img,
-  InfoContainer,
-  ResultDiv,
-  Temp,
-  TempContainer,
-  Weather,
-} from "./styles"
+
+import { CardsWrapper } from "./styles"
 import Button from "lessons/WeatherProject/input_button/Button/Button"
+import HomeCard from "../HomePage/HomeCard/HomeCard"
 import { WeatherData } from "lessons/WeatherProject/types"
 
 function WeathersPage() {
@@ -23,52 +15,26 @@ function WeathersPage() {
 
   const handleDelete = (id: string) => {
     dispatch(weatherSliceAction.deleteCard(id))
-    setTimeout(() => {
-      alert("Card deleted")
-    }, 0)
+    setTimeout(() => alert("Card deleted"), 0)
   }
 
   const handleDeleteAll = () => {
     dispatch(weatherSliceAction.deleteAllCards())
-    setTimeout(() => {
-      alert("All cards deleted")
-    }, 0)
+    setTimeout(() => alert("All cards deleted"), 0)
   }
 
   return (
     <CardsWrapper>
       {savedWeathers.map((item: WeatherData) => (
-        <ResultDiv key={item.id}>
-          <InfoContainer>
-            <TempContainer>
-              <Temp>{Math.round(item.temp)}°</Temp>
-              <City>{item.city}</City>
-            </TempContainer>
-
-            <Weather>
-              <Img
-                src={`http://openweathermap.org/img/w/${item.weather[0].icon}.png`}
-                alt="weather icon"
-              />
-              <Img
-                src={`http://openweathermap.org/img/w/${item.weather[0].icon}.png`}
-                alt="weather icon"
-              />
-              <Img
-                src={`http://openweathermap.org/img/w/${item.weather[0].icon}.png`}
-                alt="weather icon"
-              />
-            </Weather>
-          </InfoContainer>
-          <ButtonContainer>
-            <Button
-              name="Delete"
-              variant="delete"
-              onClick={() => handleDelete(item.id)}
-            />
-          </ButtonContainer>
-        </ResultDiv>
+        <HomeCard
+          key={item.id}
+          weather={item}
+          showSave={false}
+          showDelete={true}
+          onDelete={handleDelete}
+        />
       ))}
+
       {savedWeathers.length > 0 && (
         <Button name="Delete all Cards" onClick={handleDeleteAll} $fullWidth />
       )}

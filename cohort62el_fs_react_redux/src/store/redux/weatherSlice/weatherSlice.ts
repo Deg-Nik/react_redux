@@ -7,26 +7,57 @@ const weatherInitialState: WeatherInitialState = {
   error: undefined,
   currentWeather: undefined,
   weatherData: [],
+  isLoading: false,
 }
 
 export const weatherSlice = createAppSlice({
   name: "WEATHER_CARD",
   initialState: weatherInitialState,
   reducers: {
-    weatherCard: (
-      state: WeatherInitialState,
-      action: PayloadAction<WeatherData>,
-    ) => {
+    weatherCard: (state, action: PayloadAction<WeatherData>) => {
+      state.currentWeather = action.payload
+    },
+
+    saveCard: (state, action: PayloadAction<WeatherData>) => {
       state.weatherData.push(action.payload)
     },
-    deleteCard: (state: WeatherInitialState, action: PayloadAction<string>) => {
+
+    deleteCard: (
+      state: WeatherInitialState,
+      action: PayloadAction<string | undefined>,
+    ) => {
       state.weatherData = state.weatherData.filter(
         data => data.id !== action.payload,
       )
     },
+
+    clearCurrentWeather: state => {
+      state.currentWeather = undefined
+    },
+
+    deleteAllCards: (state: WeatherInitialState) => {
+      state.weatherData = []
+    },
+
+    startLoading: state => {
+      state.isLoading = true
+    },
+
+    finishLoading: state => {
+      state.isLoading = false
+    },
+    setError: (state, action) => {
+      state.error = action.payload
+    },
+    clearError: state => {
+      state.error = undefined
+    }
   },
   selectors: {
     weatherData: (state: WeatherInitialState) => state.weatherData,
+    currentWeather: (state: WeatherInitialState) => state.currentWeather,
+    hasError: (state: WeatherInitialState) => state.error,
+    isLoading: state => state.isLoading,
   },
 })
 

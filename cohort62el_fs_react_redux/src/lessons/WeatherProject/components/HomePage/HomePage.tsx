@@ -5,7 +5,7 @@ import axios from "axios"
 import Button from "lessons/WeatherProject/input_button/Button/Button"
 import Input from "lessons/WeatherProject/input_button/Input/Input"
 
-import { HOME_FORM_VALUES } from "./types"
+import { HOME_FORM_VALUES } from "lessons/WeatherProject/types"
 import {
   HomeFormContainer,
   HomePageContainer,

@@ -25,3 +25,19 @@ export interface WeatherData {
     humidity: number
   }
 }
+
+export enum HOME_FORM_VALUES {
+  CITY = "city",
+}
+
+export type CardProps = {
+  weather: WeatherData
+  showSave?: boolean
+  showDelete?: boolean
+  onDelete?: (id: string) => void
+  
+}
+
+export type ApiProps = {
+  error: string | boolean
+}

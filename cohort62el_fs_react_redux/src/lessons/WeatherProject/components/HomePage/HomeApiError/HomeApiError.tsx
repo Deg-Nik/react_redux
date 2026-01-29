@@ -2,12 +2,12 @@ import { APIError, RedText, WhiteText } from "../styles"
 import Button from "lessons/WeatherProject/input_button/Button/Button"
 import { weatherSliceAction } from "store/redux/weatherSlice/weatherSlice"
 import { useAppDispatch } from "store/hooks"
+import { ApiProps } from "lessons/WeatherProject/types"
 
-type Props = {
-  error: string | false
-}
 
-export default function HomeApiError({ error }: Props) {
+
+
+export default function HomeApiError({ error }: ApiProps) {
   const dispatch = useAppDispatch()
 
   const clearError = () => {

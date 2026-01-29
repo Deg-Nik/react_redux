@@ -12,16 +12,17 @@ import {
 } from "../styles"
 
 import Button from "lessons/WeatherProject/input_button/Button/Button"
+import { CardProps } from "lessons/WeatherProject/types"
 import { useAppDispatch } from "store/hooks"
 import { weatherSliceAction } from "store/redux/weatherSlice/weatherSlice"
-import { Props } from "./types"
+
 
 export default function HomeCard({
   weather,
   showSave = true,
   showDelete = true,
   onDelete,
-}: Props) {
+}: CardProps) {
   const dispatch = useAppDispatch()
 
   const handleDelete = () => {
@@ -51,18 +52,18 @@ export default function HomeCard({
         </Weather>
 
         <Sunrise>
-          <p>Sunrise: {new Date(weather.details.sunrise * 1000).toLocaleTimeString()}</p>
-          <p>Sunset: {new Date(weather.details.sunset * 1000).toLocaleTimeString()}</p>
+          <WhiteText>Sunrise: {new Date(weather.details.sunrise * 1000).toLocaleTimeString()}</WhiteText>
+          <WhiteText>Sunset: {new Date(weather.details.sunset * 1000).toLocaleTimeString()}</WhiteText>
         </Sunrise>
       </InfoContainer>
 
       <InfoContainer>
         <WhiteText>Feels like: {Math.round(weather.details.feelsLike)}°C</WhiteText>
-        <p>Min: {Math.round(weather.details.tempMin)}°C / Max: {Math.round(weather.details.tempMax)}°C</p>
-        <p>Pressure: {weather.details.pressure} hPa</p>
-        <p>Visibility: {weather.details.visibility / 1000} km</p>
-        <p>Wind: {weather.details.windSpeed} m/s, {weather.details.windDeg}°</p>
-        <p>Humidity: {weather.details.humidity}%</p>
+        <WhiteText>Min: {Math.round(weather.details.tempMin)}°C / Max: {Math.round(weather.details.tempMax)}°C</WhiteText>
+        <WhiteText>Pressure: {weather.details.pressure} hPa</WhiteText>
+        <WhiteText>Visibility: {weather.details.visibility / 1000} km</WhiteText>
+        <WhiteText>Wind: {weather.details.windSpeed} m/s, {weather.details.windDeg}°</WhiteText>
+        <WhiteText>Humidity: {weather.details.humidity}%</WhiteText>
       </InfoContainer>
 
       <ButtonsContainer>
